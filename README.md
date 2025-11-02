@@ -1,60 +1,69 @@
-# 📄 ClarityDocs: AI-Powered Document Simplification
+# 📄 ClarityDocs: AI-Powered Document Simplification & Legal Consultation Platform
 
-[![Next.js](https://img.shields.io/badge/Next.js-15-black?style=flat&logo=next.js)](https://nextjs.org/)
+[![Next.js](https://img.shields.io/badge/Next.js-15.3-black?style=flat&logo=next.js)](https://nextjs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue?style=flat&logo=typescript)](https://www.typescriptlang.org/)
-[![Firebase](https://img.shields.io/badge/Firebase-orange?style=flat&logo=firebase)](https://firebase.google.com/)
-[![Google AI](https://img.shields.io/badge/Google%20AI-Gemini-blue?style=flat&logo=google)](https://ai.google.dev/)
-[![Tailwind CSS](https://img.shields.io/badge/Tailwind%20CSS-3-38B2AC?style=flat&logo=tailwind-css)](https://tailwindcss.com/)
+[![Firebase](https://img.shields.io/badge/Firebase-11.9-orange?style=flat&logo=firebase)](https://firebase.google.com/)
+[![Google AI](https://img.shields.io/badge/Google%20AI-Gemini%202.5%20Flash-blue?style=flat&logo=google)](https://ai.google.dev/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind%20CSS-3.4-38B2AC?style=flat&logo=tailwind-css)](https://tailwindcss.com/)
+[![Genkit](https://img.shields.io/badge/Genkit-1.14-4285F4?style=flat&logo=google)](https://firebase.google.com/docs/genkit)
 
-> **Transform complex documents into crystal-clear insights with AI-powered analysis**
+> **Transform complex documents into crystal-clear insights with AI-powered analysis, and connect with verified lawyers for professional consultation**
 
-ClarityDocs is an intelligent document analysis platform that uses advanced AI to break down complex legal documents, contracts, and agreements into simple, actionable insights. Get risk assessments, interactive timelines, negotiation suggestions, and plain-language explanations instantly.
+ClarityDocs is an intelligent document analysis and legal consultation platform that uses advanced AI (Google Gemini 2.5 Flash) to break down complex legal documents, contracts, and agreements into simple, actionable insights. Get risk assessments, interactive timelines, negotiation suggestions, plain-language explanations, and connect with verified lawyers for video consultations—all in one platform.
 
 ## ✨ Key Features
 
-### 🤖 **AI-Powered Document Analysis**
+### 🤖 **AI-Powered Document Analysis** (Gemini 2.5 Flash)
 - **Smart Summarization**: Generates structured summaries with key points, Do's, and Don'ts
 - **Risk Assessment**: Calculate risk scores (0-100) with detailed positive/negative breakdowns
 - **Tone Analysis**: Identifies friendly, neutral, or strict language patterns in clauses
+- **Document Type Detection**: Optimized analysis for rentals, loans, employment contracts, terms of service
 
 ### 📊 **Interactive Insights**
 - **Timeline Extraction**: Automatically identifies and visualizes key dates, deadlines, and milestones  
 - **Scenario Analysis**: Interactive "What-if" chat to explore document implications
 - **Term Definitions**: Click any highlighted term for instant plain-language explanations
+- **Real-world Examples**: "In Simple Terms" explanations with practical scenarios
 
 ### 🔍 **Smart Document Processing**
-- **Multi-format Support**: Upload PDFs, images (JPG, PNG) with OCR extraction
+- **Multi-format Support**: Upload PDFs, images (JPG, PNG) with OCR extraction via Google Document AI
 - **Text Input**: Paste document content directly for instant analysis
-- **Document Type Detection**: Optimized analysis for rentals, loans, employment contracts, ToS
 - **🔒 Privacy Protection**: Automatic sensitive data masking before processing and storage
+- **Document History**: Access all previously analyzed documents with timestamps
 
 ### 💬 **Negotiation Intelligence**
 - **Negotiation Suggestions**: AI-generated talking points for unfavorable clauses
 - **Real-world Examples**: "In Simple Terms" explanations with practical scenarios
-- **Multi-language Support**: Translate summaries to Hindi, Tamil, Telugu, Malayalam
+- **Multi-language Support**: Interface and translations in English and Hindi (extensible to Tamil, Telugu, Malayalam)
 
 ### ⚖️ **Lawyer Consultation & Marketplace**
 - **Verified Lawyer Network**: Browse and connect with verified legal professionals
-- **Lawyer Profiles**: View qualifications, specializations, ratings, and hourly rates
+- **Advanced Search & Filtering**: Find lawyers by specialization, location, rating, and hourly rate
+- **Lawyer Profiles**: View qualifications, experience, specializations, ratings, and availability
 - **Video Consultations**: Schedule and conduct Google Meet consultations directly in the app
 - **Integrated Scheduling**: Book appointments via Google Calendar integration
-- **Real-time Chat**: Message lawyers directly about your legal questions
+- **Real-time Chat**: Message lawyers directly about your legal questions with attachment support
 - **Consultation Requests**: Submit detailed requests with document attachments
-- **Lawyer Dashboard**: Legal professionals can manage consultations, availability, and client interactions
+- **Lawyer Dashboard**: Legal professionals can:
+  - Manage consultations and client requests
+  - Set availability and specializations
+  - Update hourly rates and profile information
+  - Track consultation history and earnings
+  - Respond to client messages in real-time
+- **Admin Verification Portal**: Administrators can verify lawyer credentials and manage profiles
 
-### 📁 **Document History & Management**
-- **Document History**: Automatically saves all processed documents with timestamps
-- **Quick Access**: View and reload any previous document summary instantly
-- **Search & Filter**: Find past documents by name, type, or upload date
-- **Delete Control**: Remove unwanted documents from your history anytime
-
-### 🔐 **Secure & User-Friendly**
-- **Firebase Authentication**: Secure user accounts with email/password and Google OAuth
+### � **Secure & User-Friendly**
+- **Firebase Authentication**: Secure user accounts with Email/Password and Google OAuth
+- **Role-Based Access Control**: Three user roles (User, Lawyer, Admin) with appropriate permissions
 - **Cloud Storage**: Documents securely stored in Firestore with user-level permissions
 - **Privacy-First**: Only you can access your documents - full data isolation
-- **🛡️ Data Masking**: Automatic detection and masking of sensitive information (names, addresses, phone numbers, financial details, ID numbers, etc.)
+- **🛡️ Data Masking**: Automatic detection and masking of sensitive information
+  - Personal names, addresses, phone numbers
+  - Financial details, ID numbers (Aadhar, PAN, Passport)
+  - Land details, email addresses, dates of birth
 - **Masked Storage**: All documents stored with masked sensitive data for maximum privacy
-- **Responsive Design**: Beautiful, mobile-friendly interface with dark/light themes
+- **Responsive Design**: Beautiful, mobile-friendly interface with dark/light theme support
+- **Internationalization**: Built-in i18next support for multi-language content
 
 ## ⚡ Performance Optimizations
 
@@ -63,26 +72,34 @@ ClarityDocs is built with performance in mind, featuring:
 ### 🚀 **Frontend Optimizations**
 - **React.memo**: Memoized components to prevent unnecessary re-renders
 - **useMemo & useCallback**: Optimized expensive computations and callbacks
-- **Next.js Image Optimization**: Automatic image compression, lazy loading, and WebP/AVIF format support
+- **Next.js 15.3 with Turbopack**: Ultra-fast development builds and hot module replacement
+- **Next.js Image Optimization**: Automatic image compression, lazy loading, and modern format support (WebP/AVIF)
 - **Code Splitting**: Dynamic imports for heavy components and routes
 - **Component Memoization**: Feature cards and UI elements are memoized for better performance
 
 ### 🗄️ **Data & Caching**
-- **In-Memory Caching**: 5-minute cache for document history queries
+- **In-Memory Caching**: 5-minute cache for document history queries to reduce Firestore reads
 - **Smart Cache Invalidation**: Automatic cache updates on data changes
-- **Optimized Firebase Queries**: Limited queries with proper indexing
+- **Optimized Firebase Queries**: Limited queries with proper indexing via `firestore.indexes.json`
 - **Lazy Loading**: Components and data loaded on-demand
+- **Firestore Indexes**: Optimized for:
+  - Document history queries (userId + uploadedAt)
+  - Consultation requests (userId, lawyerId, status + createdAt)
+  - Real-time chat messages (sessionId + createdAt)
+  - Lawyer profile searches
 
 ### 🌐 **Network Optimizations**
-- **DNS Prefetching**: Pre-resolve Firebase and Google Cloud domains
+- **DNS Prefetching**: Pre-resolve Firebase, Google Cloud, and googleapis.com domains
 - **Resource Preloading**: Critical fonts and assets preloaded
-- **Compression**: Gzip compression enabled for all assets
+- **Compression**: Gzip/Brotli compression enabled for all assets
 - **HTTP Headers**: Optimized security and caching headers
+- **Firebase App Hosting**: CDN-enabled hosting for global content delivery
 
 ### 📊 **Performance Monitoring**
-- **Web Vitals Tracking**: Monitors LCP, FID, and CLS metrics
+- **Web Vitals Tracking**: Monitors LCP (Largest Contentful Paint), FID (First Input Delay), and CLS (Cumulative Layout Shift) metrics
 - **Performance Observer API**: Real-time performance monitoring in production
 - **Console Logging**: Development-time performance insights
+- **Custom PerformanceMonitor Component**: Automated tracking of Core Web Vitals
 
 ### 🎨 **UI/UX Optimizations**
 - **Skeleton Loading**: Smooth loading states for better perceived performance
@@ -121,35 +138,50 @@ ClarityDocs implements **automatic sensitive data masking** to protect your priv
 
 ## 🎯 Perfect For
 
-### For Users:
-- **Renters**: Understanding lease agreements and rental contracts
+### 👥 **For Users:**
+- **Renters**: Understanding lease agreements and rental contracts with risk assessment
 - **Employees**: Reviewing employment contracts and workplace policies  
-- **Small Businesses**: Analyzing supplier agreements and service contracts
-- **Consumers**: Decoding terms of service and privacy policies
+- **Small Businesses**: Analyzing supplier agreements, service contracts, and partnerships
+- **Consumers**: Decoding terms of service, privacy policies, and user agreements
 - **Students**: Learning from legal document structures and language
+- **Anyone**: Seeking to understand complex legal documents or needing legal consultation
 
-### For Lawyers:
-- **Expand Client Base**: Reach users who need legal consultation
+### ⚖️ **For Lawyers:**
+- **Expand Client Base**: Reach users who need legal consultation through the marketplace
 - **Virtual Consultations**: Conduct video meetings via integrated Google Meet
 - **Efficient Scheduling**: Manage appointments through Google Calendar sync
 - **Document Review**: Access client documents for consultation preparation
 - **Flexible Practice**: Set your own rates, availability, and specializations
 - **Verified Profile**: Build trust with verified credentials and user ratings
+- **Lawyer Dashboard**: Comprehensive dashboard to:
+  - Manage consultation requests and client communications
+  - View and respond to real-time chat messages
+  - Track consultation history and manage calendar
+  - Update profile, rates, and availability
+  - Monitor performance and client satisfaction
+
+### 🛡️ **For Administrators:**
+- **Lawyer Verification**: Review and verify lawyer credentials and profiles
+- **User Management**: Monitor user activity and manage user roles (User → Lawyer → Admin)
+- **System Administration**: Access admin dashboard with full system controls
+- **Analytics**: View usage statistics and system health (via Firebase Analytics)
+- **Content Moderation**: Ensure platform quality and safety
 
 ## 🚀 Quick Start
 
 ### Prerequisites
 - **Node.js** 18+ and npm
 - **Google Cloud Account** with enabled APIs:
-  - Gemini API (AI-powered analysis)
-  - Document AI API (OCR & text extraction)
-  - Translation API (multi-language support)
-  - Google Meet API (video consultations)
-  - Google Calendar API (appointment scheduling)
+  - **Gemini API** (Generative AI - for document analysis and text generation)
+  - **Document AI API** (OCR & text extraction from PDFs and images)
+  - **Translation API** (Multi-language support via Google Translate)
+  - **Google Meet API** (Video consultations)
+  - **Google Calendar API** (Appointment scheduling)
 - **Firebase Project** with the following services:
-  - Authentication (Email/Password & Google OAuth)
-  - Firestore Database (document storage)
-  - Cloud Storage (file uploads)
+  - **Authentication** (Email/Password & Google OAuth providers)
+  - **Firestore Database** (NoSQL document storage for user data, documents, consultations)
+  - **Cloud Storage** (File uploads for documents and chat attachments)
+  - **Hosting/App Hosting** (Optional for production deployment)
 
 ### Installation
 
@@ -212,15 +244,19 @@ ClarityDocs implements **automatic sensitive data masking** to protect your priv
    ```bash
    npm run dev
    ```
+   The app will run on `http://localhost:9002` with Turbopack for fast hot reloading.
    
-   **Terminal 2: Genkit AI Server**
+   **Terminal 2: Genkit AI Server** (Required for AI features)
    ```bash
    npm run genkit:dev
    ```
+   The Genkit UI will be available at `http://localhost:4000` for testing AI flows.
 
 5. **Access the Application**
    - Frontend: `http://localhost:9002`
-   - Genkit UI: `http://localhost:4000` (optional)
+   - Genkit UI: `http://localhost:4000` (for testing AI flows)
+   
+   **Note**: The Genkit server must be running for document analysis features to work. The frontend will make API calls to the Genkit server for AI processing.
 
 ## 🔧 Environment Variables Setup
 
@@ -300,7 +336,11 @@ ClarityDocs implements **automatic sensitive data masking** to protect your priv
    **Firestore Database**
    - Create Firestore database in production mode
    - Set up security rules for user data isolation
-   - Enable indexes for efficient queries
+   - Deploy indexes: `firebase deploy --only firestore:indexes`
+   - The `firestore.indexes.json` file contains optimized indexes for:
+     - Document history queries (userId + uploadedAt)
+     - Consultation requests (userId, lawyerId, status + createdAt)
+     - Real-time chat messages (sessionId + createdAt)
    
    **Cloud Storage**
    - Enable Firebase Storage for file uploads
@@ -363,256 +403,597 @@ ClarityDocs implements **automatic sensitive data masking** to protect your priv
 ## 🏗️ Architecture
 
 ### Tech Stack
-- **Frontend**: Next.js 15 (App Router), React 18, TypeScript
-- **Styling**: Tailwind CSS, shadcn/ui components
-- **AI/ML**: Google Gemini API, Genkit AI orchestration
+- **Frontend**: Next.js 15.3.3 (App Router with Turbopack), React 18.3.1, TypeScript 5
+- **Styling**: Tailwind CSS 3.4, shadcn/ui components (Radix UI primitives)
+- **AI/ML**: 
+  - **Google Gemini 2.5 Flash API** (Primary AI model for analysis)
+  - **Genkit 1.14** (AI orchestration and flow management)
+  - **Google Document AI** (OCR for PDF and image text extraction)
 - **Backend Services**: 
   - **Firebase Authentication**: User management with Email/Password & Google OAuth
-  - **Cloud Firestore**: NoSQL database for documents, user data, and lawyer profiles
+  - **Cloud Firestore**: NoSQL database for documents, user data, lawyer profiles, consultations
   - **Firebase Storage**: Secure file storage for document uploads and chat attachments
   - **Firebase Hosting**: Production deployment and CDN
+  - **Firebase App Hosting**: Serverless backend hosting (apphosting.yaml)
 - **Google Cloud APIs**: 
   - **Document AI**: OCR and text extraction from PDFs/images
-  - **Translation API**: Multi-language support
+  - **Translation API**: Multi-language support (i18next integration)
   - **Google Meet API**: Video consultation scheduling
   - **Google Calendar API**: Appointment management
-- **State Management**: React Context + Hooks
-- **Form Handling**: React Hook Form + Zod validation
+- **State Management**: React Context API + Hooks (AppStateProvider)
+- **Form Handling**: React Hook Form 7.54 + Zod 3.24 validation
+- **PDF Processing**: pdfjs-dist 4.5 for client-side PDF rendering
+- **Internationalization**: i18next 25.6 with react-i18next and browser language detection
+- **Charts & Visualization**: Recharts 2.15 for risk score visualization
+- **UI Components**: Comprehensive shadcn/ui library including:
+  - Forms, dialogs, dropdowns, tooltips
+  - Cards, badges, buttons, avatars
+  - Data tables, calendars, date pickers
+  - Progress bars, sliders, tabs, accordions
 
 ### System Architecture
 
 ```
-┌─────────────┐    ┌──────────────────┐    ┌─────────────────────┐
-│ User Browser│───▶│ Next.js Frontend │───▶│ AI & Cloud Services │
-└─────────────┘    └──────────────────┘    └─────────────────────┘
-                            │                        │
-                            ▼                        ▼
-                   ┌─────────────────┐    ┌─────────────────────┐
-                   │ Firebase Stack  │    │ Genkit AI Flows     │
-                   │ • Auth          │    └─────────────────────┘
-                   │ • Firestore     │             │
-                   │ • Storage       │    ┌────────┼────────────────┐
-                   │ • Hosting       │    ▼        ▼        ▼       ▼
-                   └─────────────────┘  ┌───────┐┌──────┐┌────┐┌─────────┐
-                                        │Gemini ││DocAI ││Meet││Calendar │
-                                        │  API  ││ API  ││API ││   API   │
-                                        └───────┘└──────┘└────┘└─────────┘
+┌──────────────────┐     ┌───────────────────────┐     ┌──────────────────────────┐
+│  User Browser    │────▶│  Next.js Frontend     │────▶│  AI & Cloud Services     │
+│  (Port 9002)     │     │  (React + TypeScript) │     │  (Google Cloud)          │
+└──────────────────┘     └───────────────────────┘     └──────────────────────────┘
+                                   │                               │
+                                   ▼                               ▼
+                          ┌──────────────────┐         ┌─────────────────────────┐
+                          │  Firebase Stack  │         │  Genkit AI Flows        │
+                          │  ─────────────── │         │  (Port 4000)            │
+                          │  • Auth          │         └─────────────────────────┘
+                          │  • Firestore     │                    │
+                          │  • Storage       │         ┌──────────┼──────────────────┐
+                          │  • Hosting       │         ▼          ▼          ▼       ▼
+                          └──────────────────┘   ┌─────────┐┌────────┐┌──────┐┌─────────┐
+                                                  │ Gemini  ││ DocAI  ││ Meet ││Calendar │
+                                                  │ 2.5     ││  API   ││ API  ││   API   │
+                                                  │ Flash   ││        ││      ││         │
+                                                  └─────────┘└────────┘└──────┘└─────────┘
 ```
 
 ### Lawyer Consultation Flow
 
 ```
-User → Browse Lawyers → Select Lawyer → Request Consultation
-                                              ↓
-                                  Lawyer Reviews Request
-                                              ↓
-                                  Schedule via Google Calendar
-                                              ↓
-                                  Generate Google Meet Link
-                                              ↓
-                                  Video Consultation Session
-                                              ↓
-                                  Real-time Chat & Document Sharing
+User → Browse Lawyers (Filter by specialization, location, rate, rating)
+              ↓
+      Select Lawyer Profile (View credentials, reviews, availability)
+              ↓
+      Submit Consultation Request (Attach documents, describe issue)
+              ↓
+      Lawyer Reviews Request (Dashboard notification)
+              ↓
+      Schedule via Google Calendar (Lawyer sets appointment)
+              ↓
+      Generate Google Meet Link (Automatic video conferencing)
+              ↓
+      Video Consultation Session (Face-to-face legal consultation)
+              ↓
+      Real-time Chat & Document Sharing (Before/during/after consultation)
+              ↓
+      Leave Review & Rating (User provides feedback)
 ```
 
 ### Document Processing Pipeline
 
 ```
-User Upload (PDF/Image/Text)
+1. User Upload (PDF/Image/Text)
         ↓
-Extract Text (Document AI OCR)
+2. Extract Text 
+   - PDF: pdfjs-dist (client-side)
+   - Images: Google Document AI OCR
+   - Text: Direct input
         ↓
-🛡️ MASK SENSITIVE DATA (Gemini AI)
+3. 🛡️ MASK SENSITIVE DATA
+   - Gemini AI identifies sensitive info
+   - Replace with placeholders ([PERSON_NAME_1], [ADDRESS_1], etc.)
         ↓
-Generate Summary & Analysis
+4. AI Analysis (Parallel Processing)
+   - Generate Summary (key points, do's/don'ts)
+   - Calculate Risk Score (0-100 with breakdown)
+   - Extract Timeline (dates, deadlines, milestones)
+   - Identify Terms (legal jargon for lookup)
         ↓
-Store Masked Content (Firestore)
+5. Store Masked Content (Firestore)
+   - Only masked data is saved
+   - Original sensitive info never stored
         ↓
-Display to User (Only Masked Data)
+6. Display to User
+   - Interactive summary view
+   - Click terms for definitions
+   - "What-if" scenario analysis
+   - Negotiation suggestions
 ```
 
 ### Component Flow
 
 ```
-DocumentUpload → ClarityPage → SummaryView
-     ↓               ↓            ↓
-File/Text → Server Actions → AI Flows → Gemini API
-     ↓               ↓            ↓
-OCR Extract → Mask Data → Process → Results → Interactive UI
+┌─────────────────────┐
+│  Document Upload    │ (Upload PDF/Image/Text)
+│  Component          │
+└─────────┬───────────┘
+          ↓
+┌─────────────────────┐
+│  Server Actions     │ (lib/actions.ts)
+│  - processDocument  │
+│  - uploadDocument   │
+└─────────┬───────────┘
+          ↓
+┌─────────────────────┐
+│  Genkit AI Flows    │ (src/ai/flows/)
+│  1. mask-sensitive  │ 🛡️ Privacy first
+│  2. summary         │
+│  3. risk-score      │
+│  4. timeline        │
+│  5. terms-lookup    │
+└─────────┬───────────┘
+          ↓
+┌─────────────────────┐
+│  Gemini 2.5 Flash   │ (AI Processing)
+│  API Calls          │
+└─────────┬───────────┘
+          ↓
+┌─────────────────────┐
+│  Firestore Storage  │ (Masked data only)
+│  + User History     │
+└─────────┬───────────┘
+          ↓
+┌─────────────────────┐
+│  Summary View       │ (Interactive UI)
+│  - Interactive Text │ - Click term definitions
+│  - Risk Score Chart│ - Timeline visualization
+│  - What-if Chat    │ - Negotiation suggestions
+└─────────────────────┘
 ```
 
 ## 📁 Project Structure
 
 ```
-src/
-├── app/                    # Next.js App Router
-│   ├── page.tsx           # Landing page
-│   ├── clarity/           # Document analysis
-│   │   ├── layout.tsx
-│   │   ├── page.tsx
-│   │   └── summary/
+clarity-docs/
+├── src/
+│   ├── app/                          # Next.js App Router (Pages & Layouts)
+│   │   ├── page.tsx                  # Landing page with features showcase
+│   │   ├── layout.tsx                # Root layout with providers
+│   │   ├── globals.css               # Global styles and Tailwind directives
+│   │   ├── clarity/                  # 📄 Document Analysis Feature
+│   │   │   ├── layout.tsx
+│   │   │   ├── page.tsx              # Document upload interface
+│   │   │   └── summary/
+│   │   │       └── page.tsx          # Analysis results & interactive summary
+│   │   ├── lawyers/                  # ⚖️ Lawyer Marketplace
+│   │   │   └── page.tsx              # Browse & search verified lawyers
+│   │   ├── consultation/             # 📋 Consultation Requests
+│   │   │   └── page.tsx              # Submit/manage consultation requests
+│   │   ├── chat/                     # 💬 Real-time Messaging
+│   │   │   └── [sessionId]/
+│   │   │       └── page.tsx          # Chat interface with attachments
+│   │   ├── dashboard/                # 🏠 Role-based Dashboards
+│   │   │   ├── user/                 # User dashboard (document history, consultations)
+│   │   │   │   └── page.tsx
+│   │   │   ├── lawyer/               # Lawyer dashboard (clients, schedule, earnings)
+│   │   │   │   └── page.tsx
+│   │   │   └── admin/                # Admin dashboard (verification, users, analytics)
+│   │   │       └── page.tsx
+│   │   ├── lawyer-verification/      # 🔍 Lawyer Verification Portal (Admin only)
+│   │   │   └── page.tsx
+│   │   ├── sign-in/                  # 🔐 Authentication
+│   │   │   └── page.tsx
+│   │   ├── sign-up/
+│   │   │   └── page.tsx
+│   │   └── settings/                 # ⚙️ User Settings
 │   │       └── page.tsx
-│   ├── lawyers/           # 🆕 Lawyer marketplace
-│   │   └── page.tsx
-│   ├── consultation/      # 🆕 Consultation requests
-│   │   └── page.tsx
-│   ├── chat/              # 🆕 Real-time messaging
-│   │   └── [sessionId]/
-│   │       └── page.tsx
-│   ├── dashboard/         # User & lawyer dashboards
-│   │   ├── user/
-│   │   ├── lawyer/
-│   │   └── admin/
-│   ├── lawyer-verification/ # 🆕 Lawyer verification portal
-│   │   └── page.tsx
-│   ├── sign-in/          # Authentication pages
-│   │   └── page.tsx
-│   ├── sign-up/
-│   │   └── page.tsx
-│   ├── layout.tsx        # Root layout
-│   ├── globals.css       # Global styles
-│   └── favicon.ico
-├── components/
-│   ├── auth/             # Authentication components
-│   │   ├── auth-provider.tsx
-│   │   └── role-selection-dialog.tsx
-│   ├── clarity-docs/     # Document analysis components
-│   │   ├── document-upload.tsx
-│   │   ├── summary-view.tsx
-│   │   ├── interactive-text.tsx
-│   │   ├── term-lookup-popover.tsx
-│   │   └── summary-skeleton.tsx
-│   ├── lawyer/           # 🆕 Lawyer-specific components
-│   │   ├── lawyer-card.tsx
-│   │   ├── lawyer-list.tsx
-│   │   ├── consultation-request-form.tsx
-│   │   └── chat-interface.tsx
-│   ├── layout/           # Navigation & layout
-│   │   ├── header.tsx
-│   │   ├── app-header.tsx
-│   │   ├── footer.tsx
-│   │   ├── hero-actions.tsx
-│   │   └── get-started-button.tsx
-│   └── ui/              # shadcn/ui components
-├── ai/                   # AI orchestration layer
-│   ├── flows/           # Genkit AI flows
-│   │   ├── generate-plain-language-summary.ts
-│   │   ├── generate-risk-score.ts
-│   │   ├── generate-contract-timeline.ts
-│   │   ├── answer-what-if-question.ts
-│   │   ├── lookup-term-definitions.ts
-│   │   ├── generate-examples.ts
-│   │   ├── generate-negotiation-suggestions.ts
-│   │   ├── mask-sensitive-data.ts           # 🛡️ NEW: Privacy protection
-│   │   └── process-document-flow.ts
-│   ├── genkit.ts        # AI configuration
-│   └── dev.ts           # Genkit development server
-├── context/
-│   └── app-state-provider.tsx
-├── hooks/
-│   ├── use-mobile.tsx
-│   └── use-toast.ts
-├── lib/
-│   ├── actions.ts       # Server actions
-│   ├── firebase.ts      # Firebase configuration
-│   ├── firestore-actions.ts  # Database operations
-│   ├── storage-actions.ts    # File storage operations
-│   ├── chat-actions.ts       # 🆕 Real-time chat operations
-│   ├── lawyer-actions.ts     # 🆕 Lawyer profile & consultation management
-│   ├── google-meet-actions.ts # 🆕 Google Meet integration
-│   ├── utils.ts         # Utility functions
-│   └── env.d.ts         # Environment types
-├── types/
-│   ├── lawyer.ts        # 🆕 Lawyer & consultation types
-│   └── consultation.ts  # 🆕 Consultation request types
-└── images/
-    ├── logo.png
-    └── cover.png
+│   │
+│   ├── components/
+│   │   ├── auth/                     # Authentication Components
+│   │   │   ├── auth-provider.tsx    # Firebase Auth context provider
+│   │   │   └── role-selection-dialog.tsx # User role selection on signup
+│   │   ├── clarity-docs/             # Document Analysis Components
+│   │   │   ├── document-upload.tsx   # File upload & text input
+│   │   │   ├── document-history.tsx  # Past document history list
+│   │   │   ├── summary-view.tsx      # Main summary display
+│   │   │   ├── interactive-text.tsx  # Clickable text with term highlighting
+│   │   │   ├── term-lookup-popover.tsx # Term definition popover
+│   │   │   └── summary-skeleton.tsx  # Loading skeleton
+│   │   ├── lawyer/                   # Lawyer Feature Components
+│   │   │   ├── lawyer-card.tsx       # Individual lawyer profile card
+│   │   │   ├── lawyer-list.tsx       # Lawyer listing with filters
+│   │   │   ├── consultation-request-form.tsx # Request form
+│   │   │   └── chat-interface.tsx    # Real-time chat component
+│   │   ├── layout/                   # Layout Components
+│   │   │   ├── header.tsx            # Main site header
+│   │   │   ├── app-header.tsx        # Authenticated app header
+│   │   │   ├── footer.tsx            # Site footer
+│   │   │   ├── hero-actions.tsx      # CTA buttons
+│   │   │   ├── get-started-button.tsx
+│   │   │   └── language-switcher.tsx # i18n language selector
+│   │   ├── ui/                       # shadcn/ui Components (40+ components)
+│   │   │   ├── accordion.tsx
+│   │   │   ├── alert-dialog.tsx
+│   │   │   ├── avatar.tsx
+│   │   │   ├── badge.tsx
+│   │   │   ├── button.tsx
+│   │   │   ├── card.tsx
+│   │   │   ├── dialog.tsx
+│   │   │   ├── form.tsx
+│   │   │   ├── input.tsx
+│   │   │   ├── select.tsx
+│   │   │   ├── table.tsx
+│   │   │   ├── tabs.tsx
+│   │   │   └── ... (30+ more)
+│   │   ├── i18n-provider.tsx         # Internationalization provider
+│   │   └── performance-monitor.tsx   # Web Vitals tracking
+│   │
+│   ├── ai/                           # AI Orchestration Layer (Genkit)
+│   │   ├── genkit.ts                 # Genkit configuration (Gemini 2.5 Flash)
+│   │   ├── dev.ts                    # Genkit dev server (port 4000)
+│   │   └── flows/                    # AI Flow Definitions
+│   │       ├── mask-sensitive-data.ts           # 🛡️ Privacy protection
+│   │       ├── generate-plain-language-summary.ts # Document summarization
+│   │       ├── generate-risk-score.ts           # Risk analysis (0-100)
+│   │       ├── generate-contract-timeline.ts    # Date/deadline extraction
+│   │       ├── answer-what-if-question.ts       # Interactive Q&A
+│   │       ├── lookup-term-definitions.ts       # Legal term explanations
+│   │       ├── generate-examples.ts             # Real-world examples
+│   │       ├── generate-negotiation-suggestions.ts # Negotiation tips
+│   │       └── process-document-flow.ts         # Main orchestration flow
+│   │
+│   ├── context/
+│   │   └── app-state-provider.tsx    # Global app state management
+│   │
+│   ├── hooks/
+│   │   ├── use-mobile.tsx            # Responsive mobile detection
+│   │   └── use-toast.ts              # Toast notification hook
+│   │
+│   ├── lib/                          # Utility Functions & Actions
+│   │   ├── actions.ts                # Server actions for document processing
+│   │   ├── firebase.ts               # Firebase initialization & config
+│   │   ├── firestore-actions.ts      # Firestore database operations
+│   │   ├── storage-actions.ts        # Firebase Storage operations
+│   │   ├── chat-actions.ts           # Real-time chat operations
+│   │   ├── lawyer-actions.ts         # Lawyer profile & consultation management
+│   │   ├── google-meet-actions.ts    # Google Meet integration
+│   │   ├── i18n.ts                   # i18next configuration
+│   │   ├── utils.ts                  # General utility functions
+│   │   ├── placeholder-images.ts     # Image utilities
+│   │   ├── sample-lawyers.ts         # Sample data for testing
+│   │   └── env.d.ts                  # Environment variable types
+│   │
+│   ├── types/
+│   │   ├── lawyer.ts                 # Lawyer & profile types
+│   │   └── consultation.ts           # Consultation request types
+│   │
+│   ├── locales/                      # Internationalization Translations
+│   │   ├── en.json                   # English
+│   │   └── hi.json                   # Hindi
+│   │
+│   └── images/
+│       ├── logo.png
+│       └── cover.png
+│
+├── scripts/                          # Admin Utility Scripts
+│   ├── upgrade-user-role.ts          # User role management (user→lawyer→admin)
+│   ├── fix-lawyer-verification-status.ts # Fix verification issues
+│   ├── test-google-credentials.ts    # Test Google Cloud setup
+│   └── README.md                     # Scripts documentation
+│
+├── docs/
+│   └── blueprint.md                  # Project blueprint & design docs
+│
+├── public/                           # Static Assets
+│
+├── Configuration Files:
+├── apphosting.yaml                   # Firebase App Hosting config
+├── firebase.json                     # Firebase project configuration
+├── firestore.rules                   # Firestore security rules (role-based)
+├── firestore.indexes.json            # Database indexes for performance
+├── storage.rules                     # Firebase Storage security rules
+├── cors.json                         # CORS configuration for storage
+├── next.config.ts                    # Next.js configuration
+├── tailwind.config.ts                # Tailwind CSS configuration
+├── postcss.config.mjs                # PostCSS configuration
+├── tsconfig.json                     # TypeScript configuration
+├── components.json                   # shadcn/ui configuration
+├── package.json                      # Dependencies & scripts
+├── .env                              # Environment variables (gitignored)
+└── README.md                         # This file
 ```
+
+### Key Directories Explained:
+
+- **`app/`**: Next.js 15 App Router with file-based routing and React Server Components
+- **`ai/`**: Genkit AI flows powered by Google Gemini 2.5 Flash for document analysis
+- **`components/`**: Reusable React components organized by feature
+- **`lib/`**: Business logic, Firebase operations, and utility functions
+- **`scripts/`**: Admin CLI tools for user management and system maintenance
+- **`types/`**: TypeScript type definitions for type safety
+- **`locales/`**: i18next translation files for internationalization
 
 ## 🔧 Development
 
 ### Available Scripts
 
 ```bash
-# Development server (port 9002)
+# Development (Port 9002 with Turbopack for ultra-fast builds)
 npm run dev
 
-# Genkit AI development UI
-npm run genkit:dev
-npm run genkit:watch
+# Genkit AI Development Server (Required for AI features)
+npm run genkit:dev         # Start Genkit UI on port 4000
+npm run genkit:watch       # Auto-restart on changes
 
-# Production build
-npm run build
+# Production Build & Deployment
+npm run build              # Next.js production build
+npm start                  # Start production server
 
-# Start production server
-npm start
+# Code Quality
+npm run typecheck          # TypeScript type checking
+npm run lint               # ESLint code linting
 
-# Type checking
-npm run typecheck
+# Admin Scripts (see scripts/README.md)
+npx tsx scripts/upgrade-user-role.ts <email> <role>
+npx tsx scripts/test-google-credentials.ts
+npx tsx scripts/fix-lawyer-verification-status.ts
+```
 
-# Linting
-npm run lint
+**Important**: The Genkit server (`npm run genkit:dev`) must be running concurrently with the Next.js dev server for AI document analysis features to work. Run them in separate terminal windows.
+
+### Admin Scripts
+
+The `scripts/` directory contains utility scripts for managing the application:
+
+- **`upgrade-user-role.ts`**: Upgrade user roles (user → lawyer → admin) in Firestore
+- **`fix-lawyer-verification-status.ts`**: Fix lawyer verification statuses
+- **`test-google-credentials.ts`**: Test Google Cloud service account credentials
+
+See `scripts/README.md` for detailed usage instructions.
+
+**Example: Upgrade user to lawyer role**
+```bash
+npx tsx scripts/upgrade-user-role.ts user@example.com lawyer
 ```
 
 ### AI Flow Development
 
-ClarityDocs uses **Genkit** for AI orchestration. Each analysis feature corresponds to a flow:
+ClarityDocs uses **Genkit 1.14** with **Google Gemini 2.5 Flash** for AI orchestration. Each analysis feature corresponds to a specific flow in `src/ai/flows/`:
 
-- `generate-plain-language-summary.ts` - Document summarization
-- `generate-risk-score.ts` - Risk analysis with scoring
-- `generate-contract-timeline.ts` - Date and deadline extraction
-- `answer-what-if-question.ts` - Interactive Q&A
-- `lookup-term-definitions.ts` - Legal term explanations
-- `generate-examples.ts` - Real-world examples
-- `generate-negotiation-suggestions.ts` - Negotiation tips
-- `mask-sensitive-data.ts` - 🛡️ **Privacy protection & data masking**
-- `process-document-flow.ts` - Document processing pipeline
+#### Core AI Flows:
+
+1. **`mask-sensitive-data.ts`** 🛡️ (Privacy First)
+   - Runs BEFORE all other flows
+   - Detects and masks: names, addresses, phone numbers, emails, ID numbers, financial data, land details, DOB
+   - Uses structured output with placeholders: `[PERSON_NAME_1]`, `[ADDRESS_1]`, etc.
+   - Ensures original sensitive data never reaches storage
+
+2. **`generate-plain-language-summary.ts`**
+   - Document summarization with structured key points
+   - Extracts Do's and Don'ts
+   - Identifies document tone (friendly/neutral/strict)
+   - Returns JSON-structured summary
+
+3. **`generate-risk-score.ts`**
+   - Risk analysis with 0-100 scoring
+   - Positive and negative factor breakdowns
+   - Overall risk assessment with reasoning
+
+4. **`generate-contract-timeline.ts`**
+   - Automatic date and deadline extraction
+   - Milestone identification with descriptions
+   - Timeline visualization data
+
+5. **`answer-what-if-question.ts`**
+   - Interactive Q&A based on document context
+   - Scenario analysis and implications
+   - Context-aware responses
+
+6. **`lookup-term-definitions.ts`**
+   - Legal term explanations in plain language
+   - Context-specific definitions
+   - User-friendly explanations
+
+7. **`generate-examples.ts`**
+   - Real-world examples and practical scenarios
+   - "In Simple Terms" explanations
+   - Relatable analogies
+
+8. **`generate-negotiation-suggestions.ts`**
+   - Strategic negotiation tips and talking points
+   - Identifies unfavorable clauses
+   - Provides alternative wording suggestions
+
+9. **`process-document-flow.ts`**
+   - Main document processing pipeline orchestration
+   - Coordinates all AI flows in sequence
+   - Error handling and retry logic
+
+#### Genkit Configuration:
+
+```typescript
+// src/ai/genkit.ts
+import {genkit} from 'genkit';
+import {googleAI} from '@genkit-ai/googleai';
+
+export const ai = genkit({
+  plugins: [googleAI()],
+  model: 'googleai/gemini-2.5-flash',
+});
+```
+
+#### Testing Flows:
+
+- Access Genkit UI at `http://localhost:4000` when running `npm run genkit:dev`
+- Test individual flows with sample inputs
+- View flow execution traces and debugging info
+- Monitor API usage and performance
 
 ### Adding New Features
 
-1. **Create AI Flow**: Add new flow in `src/ai/flows/`
-2. **Server Action**: Export action in `src/lib/actions.ts`
-3. **UI Component**: Add interface in `components/clarity-docs/`
-4. **Integration**: Connect in `SummaryView.tsx`
+#### 1. Create AI Flow
+```bash
+# Create new flow in src/ai/flows/
+touch src/ai/flows/your-new-feature.ts
+```
+
+Example flow structure:
+```typescript
+import { ai } from '../genkit';
+import { z } from 'genkit';
+
+export const yourNewFeatureFlow = ai.defineFlow(
+  {
+    name: 'yourNewFeature',
+    inputSchema: z.string(),
+    outputSchema: z.object({
+      result: z.string(),
+    }),
+  },
+  async (input) => {
+    const { text } = await ai.generate({
+      model: 'googleai/gemini-2.5-flash',
+      prompt: `Your prompt here: ${input}`,
+    });
+    return { result: text };
+  }
+);
+```
+
+#### 2. Create Server Action
+Add action in `src/lib/actions.ts`:
+```typescript
+export async function yourNewFeature(documentText: string) {
+  const result = await runFlow(yourNewFeatureFlow, documentText);
+  return result;
+}
+```
+
+#### 3. Create UI Component
+Add component in `src/components/clarity-docs/`:
+```typescript
+export function YourNewFeature({ data }) {
+  return <div>{/* Your UI here */}</div>;
+}
+```
+
+#### 4. Integrate in Summary View
+Update `src/components/clarity-docs/summary-view.tsx`:
+```typescript
+import { YourNewFeature } from './your-new-feature';
+
+// Add to component
+<YourNewFeature data={yourData} />
+```
 
 ## 🔐 Security Best Practices
 
-### Privacy & Data Protection
-- 🛡️ **Automatic Data Masking**: All sensitive information is automatically detected and masked
-- 🔒 **Masked Storage**: Only masked content is stored in Firestore (never original sensitive data)
-- 🎯 **Comprehensive Coverage**: Masks names, addresses, phone numbers, emails, ID numbers, financial details, land details, and dates of birth
-- ✅ **Privacy-First Processing**: Masking happens immediately after document text extraction, before any AI processing or storage
+### Privacy & Data Protection 🛡️
 
-### Sensitive Data Handling
-The application automatically masks the following types of information:
-- **Personal Names**: Individuals and organizations → `[PERSON_NAME_1]`, `[ORGANIZATION_1]`
-- **Addresses**: Complete addresses, streets, cities → `[ADDRESS_1]`
-- **Land Details**: Survey numbers, plot numbers → `[LAND_DETAIL_1]`
-- **Contact Info**: Phone numbers, emails → `[PHONE_NUMBER_1]`, `[EMAIL_1]`
-- **ID Numbers**: Aadhar, PAN, passport, etc. → `[ID_NUMBER_1]`
-- **Financial Data**: Account numbers, amounts → `[ACCOUNT_NUMBER_1]`, `[AMOUNT_1]`
-- **Dates of Birth**: Personal DOB references → `[DOB_1]`
+ClarityDocs implements **comprehensive privacy protection** through automatic sensitive data masking:
 
-### Environment Variables
-- ✅ Use `NEXT_PUBLIC_` prefix for client-side variables only
-- ✅ Keep server-side API keys in `.env` (never commit)
-- ✅ Rotate API keys if exposed in git history
-- ✅ Use Firebase Security Rules for data protection
+#### How Data Masking Works:
+1. **Upload/Input** → User uploads document or pastes text
+2. **Text Extraction** → Extract text from PDF/image (if needed)
+3. **🛡️ MASK SENSITIVE DATA** → Gemini AI identifies and masks ALL sensitive information
+4. **Secure Processing** → All AI analysis happens on masked content only
+5. **Privacy-First Storage** → Only masked content is saved to Firestore (never original)
 
-### API Key Management
-- **Firebase API Key**: Safe to expose (public by design)
-- **Google Cloud API Keys**: Server-side only, restrict by IP/domain
-- **Gemini API Key**: Server-side only, monitor usage quotas
+#### What Gets Automatically Masked:
+- 👤 **Personal Names**: John Smith → `[PERSON_NAME_1]`
+- 🏢 **Organizations**: Acme Corp → `[ORGANIZATION_1]`
+- 📍 **Addresses**: 123 Main St, New York → `[ADDRESS_1]`
+- 🏞️ **Land Details**: Survey No. 45/2A, Plot 123 → `[LAND_DETAIL_1]`
+- 📞 **Phone Numbers**: +1-234-567-8900 → `[PHONE_NUMBER_1]`
+- 📧 **Emails**: user@example.com → `[EMAIL_1]`
+- 🪪 **ID Numbers**: Aadhar, PAN, Passport, SSN → `[ID_NUMBER_1]`
+- 💳 **Financial Data**: Account numbers, amounts → `[ACCOUNT_NUMBER_1]`, `[AMOUNT_1]`
+- 🎂 **Dates of Birth**: 01/01/1990 → `[DOB_1]`
 
-### Service Account Security
-- Store private keys securely with proper newline escaping
-- Use least privilege IAM roles
-- Regularly rotate service account keys
+#### Privacy Guarantees:
+✅ Original sensitive data is **NEVER stored** in the database  
+✅ Masking happens **BEFORE** any AI processing or analysis  
+✅ All document views show **ONLY masked content**  
+✅ Document history contains **ONLY masked versions**  
+✅ Summary, risk analysis, timeline, and all features use **masked data only**  
+✅ Even if database is compromised, sensitive data is safe
+
+### Firebase Security Rules
+
+ClarityDocs implements **role-based access control** with comprehensive Firestore security rules (`firestore.rules`):
+
+#### User Roles:
+- **User** (default): Can upload documents, view own data, request consultations
+- **Lawyer**: All user permissions + manage lawyer profile, respond to consultations
+- **Admin**: All permissions + verify lawyers, manage users, access admin dashboard
+
+#### Security Rules Summary:
+```javascript
+// Users collection - users can only read/write their own data
+match /users/{userId} {
+  allow read, write: if isOwner(userId);
+}
+
+// Document History - users can only access their own documents
+match /documentHistory/{documentId} {
+  allow read: if resource.data.userId == request.auth.uid;
+  allow create: if request.resource.data.userId == request.auth.uid;
+}
+
+// Lawyer Profiles - public read if authenticated, write by owner/admin
+match /lawyerProfiles/{profileId} {
+  allow read: if isAuthenticated();
+  allow update: if isOwner(userId) || isAdmin();
+}
+
+// Consultation Requests - only participants can access
+match /consultationRequests/{requestId} {
+  allow read: if isParticipant() || isAdmin();
+  allow update: if isParticipant() || isAdmin();
+}
+
+// Chat Sessions - only participants can access messages
+match /chatSessions/{sessionId} {
+  allow read: if isSessionParticipant();
+  match /messages/{messageId} {
+    allow read, write: if isSessionParticipant();
+  }
+}
+```
+
+Deploy security rules:
+```bash
+firebase deploy --only firestore:rules
+```
+
+### Environment Variables & API Security
+
+#### Environment Variable Guidelines:
+- ✅ Use `NEXT_PUBLIC_` prefix for client-side variables only (safe to expose)
+- ✅ Keep server-side API keys in `.env` file (never commit to git)
+- ✅ Add `.env` to `.gitignore` to prevent accidental commits
+- ✅ Rotate API keys immediately if exposed in git history
+- ✅ Use different API keys for development and production
+- ✅ Restrict API keys by domain/IP in Google Cloud Console
+
+#### API Key Management:
+| API Key Type | Exposure | Security Measures |
+|--------------|----------|-------------------|
+| **Firebase API Key** | ✅ Safe to expose | Public by design, protected by Firebase security rules |
+| **Google Cloud API Keys** | ❌ Server-side only | Restrict by IP/domain in Google Cloud Console |
+| **Gemini API Key** | ❌ Server-side only | Monitor usage quotas, set spending limits |
+| **Service Account Keys** | ❌ Server-side only | Store securely with `\\n` escaping, rotate regularly |
+
+#### Service Account Security:
+- ✅ Store private keys securely with proper newline escaping (`\\n` in `.env`)
+- ✅ Use least privilege IAM roles (only required permissions)
+- ✅ Regularly rotate service account keys (every 90 days recommended)
+- ✅ Never commit service account JSON files to version control
+- ✅ Use separate service accounts for development and production
+- ✅ Test credentials with `scripts/test-google-credentials.ts`
 
 ## 🚀 Deployment
 
 ### Firebase App Hosting (Recommended)
+
+ClarityDocs is configured for Firebase App Hosting with `apphosting.yaml`. This provides serverless backend hosting optimized for Next.js applications.
 
 1. **Install Firebase CLI**
    ```bash
@@ -620,19 +1001,34 @@ The application automatically masks the following types of information:
    firebase login
    ```
 
-2. **Initialize Project**
+2. **Initialize Firebase Project**
    ```bash
    firebase init hosting
+   firebase init firestore
    ```
 
-3. **Configure Environment**
+3. **Deploy Firestore Rules & Indexes**
+   ```bash
+   firebase deploy --only firestore:rules
+   firebase deploy --only firestore:indexes
+   ```
+
+4. **Configure Environment**
    - Add production environment variables in Firebase Console
    - Ensure API keys have proper domain restrictions
+   - Configure Firebase App Hosting environment variables
 
-4. **Deploy**
+5. **Deploy to Firebase App Hosting**
    ```bash
    npm run build
-   firebase deploy
+   firebase deploy --only hosting
+   ```
+   
+   Or use Firebase App Hosting for automatic deployments:
+   ```bash
+   # Connect your repository to Firebase App Hosting
+   # Configure build settings in Firebase Console
+   # Automatic deployments on git push
    ```
 
 ### Alternative Deployments
@@ -641,59 +1037,325 @@ The application automatically masks the following types of information:
 - **Netlify**: Connect repository for auto-deployment
 - **Google Cloud Run**: Containerized deployment
 
-## 📊 Usage Analytics
+## 📊 Usage Analytics & Monitoring
 
-Track key metrics to improve user experience:
+Track key metrics to improve user experience and system performance:
 
-- Document analysis completion rates
-- Most used features (Risk Score, Timeline, etc.)
-- API response times and error rates
-- User retention and engagement patterns
+### Application Analytics:
+- 📄 **Document Processing**: Analysis completion rates, average processing time
+- 🔍 **Feature Usage**: Most used features (Risk Score, Timeline, What-if, etc.)
+- ⚖️ **Lawyer Marketplace**: Consultation request rates, lawyer response times
+- 💬 **Chat Activity**: Real-time chat usage, message volume
+- 👥 **User Engagement**: Retention rates, active users, session duration
+- 🔐 **Authentication**: Sign-up conversion, login success rates
+
+### Performance Monitoring:
+
+The application includes a **PerformanceMonitor** component (`src/components/performance-monitor.tsx`) that tracks Web Vitals in production:
+
+- **LCP (Largest Contentful Paint)**: Page load performance (< 2.5s is good)
+- **FID (First Input Delay)**: Interactivity (< 100ms is good)
+- **CLS (Cumulative Layout Shift)**: Visual stability (< 0.1 is good)
+
+### API & Error Monitoring:
+- 🔥 **Firebase Performance**: Monitor Firestore query performance
+- 🤖 **Genkit Traces**: AI flow execution times and error rates
+- 📊 **Google Cloud Monitoring**: API usage, quotas, and costs
+- 🚨 **Error Tracking**: Client-side and server-side error rates
+
+### Recommended Tools:
+- **Firebase Analytics**: Built-in user analytics and events
+- **Google Cloud Console**: API usage, billing, and quotas
+- **Sentry** (optional): Real-time error tracking and performance monitoring
+- **Vercel Analytics** (if deployed on Vercel): Edge function performance
 
 ## 🤝 Contributing
 
-We welcome contributions! Please follow these guidelines:
+We welcome contributions! ClarityDocs is an open-source project that benefits from community input.
 
 ### Development Workflow
 
 1. **Fork the repository**
-2. **Create feature branch**: `git checkout -b feature/amazing-feature`
-3. **Make changes**: Follow TypeScript and ESLint conventions
-4. **Test thoroughly**: Ensure all AI flows work correctly
-5. **Submit PR**: Include description of changes and testing done
+   ```bash
+   git clone https://github.com/joe-anidas/Clarity-Docs.git
+   cd Clarity-Docs
+   ```
+
+2. **Create feature branch**
+   ```bash
+   git checkout -b feature/amazing-feature
+   ```
+
+3. **Make changes**
+   - Follow TypeScript best practices
+   - Use ESLint rules (run `npm run lint`)
+   - Follow component structure conventions
+   - Add comments for complex logic
+   - Update types in `src/types/` if needed
+
+4. **Test thoroughly**
+   - Test all AI flows work correctly
+   - Check mobile responsiveness
+   - Test authentication flows
+   - Verify Firebase security rules
+   - Run `npm run typecheck` before committing
+
+5. **Commit changes**
+   ```bash
+   git add .
+   git commit -m "feat: Add amazing feature"
+   ```
+   
+   Use conventional commit messages:
+   - `feat:` New features
+   - `fix:` Bug fixes
+   - `docs:` Documentation changes
+   - `style:` Code style changes (formatting)
+   - `refactor:` Code refactoring
+   - `test:` Adding tests
+   - `chore:` Maintenance tasks
+
+6. **Push to branch**
+   ```bash
+   git push origin feature/amazing-feature
+   ```
+
+7. **Submit Pull Request**
+   - Include description of changes
+   - Reference any related issues
+   - Add screenshots for UI changes
+   - Describe testing done
+   - Wait for code review
+
+### Contribution Guidelines
+
+#### Code Style:
+- Use TypeScript for all new files
+- Follow existing component patterns
+- Use Tailwind CSS for styling (no inline styles)
+- Implement responsive design (mobile-first)
+- Add proper TypeScript types (no `any`)
+
+#### Component Guidelines:
+- Use functional components with hooks
+- Implement React.memo for expensive components
+- Use `useMemo` and `useCallback` appropriately
+- Add proper prop types with TypeScript interfaces
+- Include JSDoc comments for complex components
+
+#### AI Flow Guidelines:
+- Define clear input/output schemas with Zod
+- Add error handling and retry logic
+- Test flows in Genkit UI before integration
+- Document prompt engineering decisions
+- Consider token limits and costs
 
 ### Reporting Issues
 
-- 🐛 **Bug Reports**: Include steps to reproduce, expected vs actual behavior
-- 💡 **Feature Requests**: Describe use case and proposed solution
-- 📚 **Documentation**: Help improve clarity and completeness
+Help us improve ClarityDocs by reporting issues:
+
+#### 🐛 Bug Reports:
+When reporting bugs, include:
+- **Description**: Clear description of the bug
+- **Steps to Reproduce**: Detailed steps to reproduce the issue
+  1. Go to '...'
+  2. Click on '...'
+  3. See error
+- **Expected Behavior**: What should happen
+- **Actual Behavior**: What actually happens
+- **Screenshots**: If applicable
+- **Environment**: 
+  - Browser and version
+  - Operating system
+  - Node.js version
+  - Any relevant console errors
+
+#### 💡 Feature Requests:
+When requesting features, describe:
+- **Use Case**: Why is this feature needed?
+- **Proposed Solution**: How should it work?
+- **Alternatives**: Any alternative solutions considered?
+- **Additional Context**: Screenshots, mockups, or examples
+
+#### 📚 Documentation:
+Help improve documentation by:
+- Fixing typos and grammar
+- Adding missing information
+- Clarifying confusing sections
+- Adding code examples
+- Translating to other languages
+
+### Areas for Contribution
+
+We'd especially welcome contributions in these areas:
+- 🌐 **Internationalization**: Add more language translations (Tamil, Telugu, Malayalam, etc.)
+- 🎨 **UI/UX**: Improve design, accessibility, and user experience
+- 🧪 **Testing**: Add unit tests, integration tests, E2E tests
+- 📱 **Mobile**: Optimize mobile experience and PWA features
+- 🤖 **AI Prompts**: Improve prompt engineering for better results
+- 📊 **Visualizations**: Add more charts and data visualizations
+- 🔒 **Security**: Enhance security features and audits
+- ⚡ **Performance**: Optimize bundle size, loading times, and caching
 
 ## 🔍 Troubleshooting
 
-### Common Issues
+### Common Issues & Solutions
 
-1. **Genkit Server Won't Start**
-   ```bash
-   # Check if port 4000 is available
-   lsof -i :4000
-   # Kill process if needed
-   kill -9 <PID>
-   ```
+#### 1. Genkit Server Won't Start
+**Problem**: `npm run genkit:dev` fails or port 4000 is busy
 
-2. **Document AI Errors**
-   - Verify processor ID and location
-   - Check service account permissions
-   - Ensure Document AI API is enabled
+**Solution**:
+```bash
+# Check if port 4000 is already in use
+lsof -i :4000
 
-3. **Firebase Auth Issues**
-   - Verify API key is correct
-   - Check Firebase project configuration
-   - Ensure Authentication is enabled
+# Kill the process if needed
+kill -9 <PID>
 
-4. **Environment Variable Issues**
-   - Check `.env` file exists and has correct format
-   - Verify private key newlines are escaped properly
-   - Restart development server after changes
+# Restart Genkit server
+npm run genkit:dev
+```
+
+#### 2. Document AI / OCR Errors
+**Problem**: PDF/image upload fails with API errors
+
+**Solution**:
+- Verify Document AI API is enabled in Google Cloud Console
+- Check processor ID and location in `.env` file
+- Ensure service account has `documentai.apiUser` role
+- Test credentials: `npx tsx scripts/test-google-credentials.ts`
+- Check Document AI quotas and billing
+
+#### 3. Genkit Server Connection Issues
+**Problem**: Frontend can't connect to AI flows
+
+**Solution**:
+- Ensure Genkit server is running: `npm run genkit:dev` (separate terminal)
+- Check Genkit server logs for errors
+- Verify `GEMINI_API_KEY` is set correctly in `.env`
+- Confirm Genkit is accessible at `http://localhost:4000`
+- Check Genkit UI for flow execution errors
+
+#### 4. PDF Processing Issues
+**Problem**: PDF upload doesn't extract text properly
+
+**Solution**:
+- Verify `pdfjs-dist` is installed: `npm list pdfjs-dist`
+- Check browser console for PDF.js errors
+- Try with a different PDF file (some PDFs may be corrupted)
+- For image-based PDFs, ensure Document AI OCR is working
+- Check if PDF has text layer (OCR may be required)
+
+#### 5. Firebase Authentication Issues
+**Problem**: Can't sign in/up or OAuth fails
+
+**Solution**:
+- Verify Firebase config in `.env` (all `NEXT_PUBLIC_FIREBASE_*` variables)
+- Check Firebase project authentication is enabled
+- For Email/Password: Ensure provider is enabled in Firebase Console
+- For Google OAuth:
+  - Verify OAuth client is configured in Google Cloud Console
+  - Check redirect URIs match exactly: `https://your-project-id.firebaseapp.com/__/auth/handler`
+  - Add authorized domains in Firebase Console
+  - Wait 5-10 minutes for OAuth changes to propagate
+- Clear browser cache and cookies
+- Check browser console for specific Firebase auth errors
+
+#### 6. Environment Variable Issues
+**Problem**: Environment variables not loading or incorrect
+
+**Solution**:
+- Verify `.env` file exists in root directory
+- Check variable names match exactly (case-sensitive)
+- For private key, ensure newlines are escaped properly: `\\n`
+- Restart dev server after changing `.env` file
+- Don't put quotes around values unless value contains spaces
+- Example correct format:
+  ```env
+  GEMINI_API_KEY=AIzaSyA...
+  GOOGLE_CLOUD_PRIVATE_KEY="-----BEGIN PRIVATE KEY-----\\nMIIE...\\n-----END PRIVATE KEY-----\\n"
+  ```
+- Use `scripts/test-google-credentials.ts` to verify credentials
+
+#### 7. Role-Based Access Issues
+**Problem**: Users can't access features or dashboards
+
+**Solution**:
+- Check user role in Firestore: `users/{userId}` → `role` field
+- Use admin script to upgrade role:
+  ```bash
+  npx tsx scripts/upgrade-user-role.ts user@example.com lawyer
+  ```
+- Supported roles: `user`, `lawyer`, `admin`
+- Deploy Firestore security rules: `firebase deploy --only firestore:rules`
+- Users may need to sign out and back in after role changes
+- Clear browser cache if role changes don't reflect
+
+#### 8. Firestore Permission Denied
+**Problem**: "Missing or insufficient permissions" error
+
+**Solution**:
+- Deploy security rules: `firebase deploy --only firestore:rules`
+- Check user is authenticated (signed in)
+- Verify user has correct role for the operation
+- Check Firestore security rules in `firestore.rules`
+- Inspect Firestore Rules Playground in Firebase Console
+- Ensure document structure matches security rules expectations
+
+#### 9. Firebase Storage Upload Fails
+**Problem**: Document upload fails with storage errors
+
+**Solution**:
+- Verify Firebase Storage is enabled in Firebase Console
+- Deploy storage rules: `firebase deploy --only storage:rules`
+- Check file size limits (default 10MB, configurable)
+- Ensure user is authenticated
+- Verify CORS configuration in `cors.json`
+- Check Storage quotas and billing
+
+#### 10. Build Errors
+**Problem**: `npm run build` fails with TypeScript errors
+
+**Solution**:
+```bash
+# Type check first
+npm run typecheck
+
+# Fix TypeScript errors
+# Check for missing types
+npm install --save-dev @types/node @types/react @types/react-dom
+
+# Clear Next.js cache
+rm -rf .next
+
+# Rebuild
+npm run build
+```
+
+#### 11. Performance Issues
+**Problem**: App is slow or unresponsive
+
+**Solution**:
+- Check Firestore indexes are deployed: `firebase deploy --only firestore:indexes`
+- Monitor Web Vitals in browser DevTools
+- Check Genkit server response times in Genkit UI
+- Verify caching is working (check Network tab)
+- Reduce image sizes and use Next.js Image optimization
+- Check for unnecessary re-renders with React DevTools
+- Monitor Gemini API response times (target < 5s)
+
+### Getting Help
+
+If you're still experiencing issues:
+
+1. **Check GitHub Issues**: [Search existing issues](https://github.com/joe-anidas/Clarity-Docs/issues)
+2. **Create New Issue**: Provide detailed information (see Reporting Issues section)
+3. **Check Logs**: 
+   - Browser console logs
+   - Genkit server logs
+   - Firebase Console logs
+   - Next.js terminal output
+4. **Join Discussion**: [GitHub Discussions](https://github.com/joe-anidas/Clarity-Docs/discussions)
 
 ## 📄 License
 
@@ -701,22 +1363,96 @@ This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) 
 
 ## 🙏 Acknowledgments
 
-- **Google AI**: Gemini API for powerful language understanding
-- **Firebase**: Authentication and hosting infrastructure  
-- **shadcn/ui**: Beautiful, accessible component library
-- **Genkit**: AI orchestration and development tools
-- **Next.js**: Full-stack React framework
-- **Tailwind CSS**: Utility-first styling approach
+ClarityDocs is built with amazing open-source technologies and services:
 
-## 🔗 Links
+### AI & Cloud Services
+- **[Google Gemini 2.5 Flash](https://ai.google.dev/)**: Powerful language understanding and generation
+- **[Genkit](https://firebase.google.com/docs/genkit)**: AI orchestration and flow management framework
+- **[Google Document AI](https://cloud.google.com/document-ai)**: Advanced OCR and document processing
+- **[Google Cloud Translation API](https://cloud.google.com/translate)**: Multi-language support
 
-- **Live Demo**: [Coming Soon](#)
-- **Documentation**: [Coming Soon](#)
-- **Issues**: [GitHub Issues](https://github.com/joe-anidas/ClarityDocs/issues)
-- **Discussions**: [GitHub Discussions](https://github.com/joe-anidas/ClarityDocs/discussions)
+### Backend & Database
+- **[Firebase](https://firebase.google.com/)**: Authentication, hosting, and real-time infrastructure
+  - **Firestore**: NoSQL database with real-time sync
+  - **Authentication**: Secure user management with OAuth
+  - **Cloud Storage**: File storage and CDN
+  - **Hosting**: Production deployment
+- **[Google Meet API](https://developers.google.com/meet)**: Video consultation integration
+- **[Google Calendar API](https://developers.google.com/calendar)**: Appointment scheduling
+
+### Frontend & UI
+- **[Next.js](https://nextjs.org/)**: Full-stack React framework with App Router
+- **[React](https://react.dev/)**: Component-based UI library
+- **[TypeScript](https://www.typescriptlang.org/)**: Type-safe JavaScript
+- **[Tailwind CSS](https://tailwindcss.com/)**: Utility-first CSS framework
+- **[shadcn/ui](https://ui.shadcn.com/)**: Beautiful, accessible component library
+- **[Radix UI](https://www.radix-ui.com/)**: Unstyled, accessible component primitives
+- **[Lucide Icons](https://lucide.dev/)**: Beautiful, consistent icon set
+
+### Development Tools
+- **[React Hook Form](https://react-hook-form.com/)**: Performant form handling
+- **[Zod](https://zod.dev/)**: TypeScript-first schema validation
+- **[i18next](https://www.i18next.com/)**: Internationalization framework
+- **[pdfjs-dist](https://mozilla.github.io/pdf.js/)**: Client-side PDF rendering
+- **[Recharts](https://recharts.org/)**: Composable charting library
+- **[date-fns](https://date-fns.org/)**: Modern date utility library
+
+### Community & Contributors
+- Special thanks to all contributors who have helped improve ClarityDocs
+- Thanks to the open-source community for building and maintaining these incredible tools
+- Thanks to early users for feedback and bug reports
 
 ---
 
-**Made with ❤️ for everyone who's ever been confused by legal jargon**
+**Made with ❤️ by [Joe Anidas](https://github.com/joe-anidas)**
 
-*Empowering users to understand documents and make informed decisions*
+*Empowering users to understand complex documents and make informed decisions*
+
+*Democratizing access to legal knowledge and consultation*
+
+## 🔗 Links & Resources
+
+### Project Links
+- 🌐 **Live Demo**: [Coming Soon](#)
+- 📖 **Documentation**: [GitHub Wiki](https://github.com/joe-anidas/Clarity-Docs/wiki) (Coming Soon)
+- 🐛 **Report Issues**: [GitHub Issues](https://github.com/joe-anidas/Clarity-Docs/issues)
+- 💬 **Discussions**: [GitHub Discussions](https://github.com/joe-anidas/Clarity-Docs/discussions)
+- 📦 **Releases**: [GitHub Releases](https://github.com/joe-anidas/Clarity-Docs/releases)
+
+### Documentation
+- 📘 [Project Blueprint](docs/blueprint.md): Original design and feature specifications
+- 🔧 [Admin Scripts Guide](scripts/README.md): User role management and utilities
+- 🔐 [Firebase Setup Guide](#setting-up-firebase): Detailed Firebase configuration
+- 🤖 [AI Flows Documentation](#ai-flow-development): Genkit flow development guide
+
+### External Resources
+- [Next.js Documentation](https://nextjs.org/docs)
+- [Firebase Documentation](https://firebase.google.com/docs)
+- [Genkit Documentation](https://firebase.google.com/docs/genkit)
+- [Google Gemini API](https://ai.google.dev/docs)
+- [Tailwind CSS Documentation](https://tailwindcss.com/docs)
+- [shadcn/ui Components](https://ui.shadcn.com/docs)
+
+### Community
+- 👨‍💻 **Author**: [Joe Anidas](https://github.com/joe-anidas)
+- 📧 **Contact**: [GitHub Profile](https://github.com/joe-anidas)
+- 🌟 **Star this repo**: Help others discover ClarityDocs!
+
+---
+
+<div align="center">
+
+### 📄 ClarityDocs
+
+**Transforming Complex Documents into Crystal-Clear Insights**
+
+[![GitHub stars](https://img.shields.io/github/stars/joe-anidas/Clarity-Docs?style=social)](https://github.com/joe-anidas/Clarity-Docs/stargazers)
+[![GitHub forks](https://img.shields.io/github/forks/joe-anidas/Clarity-Docs?style=social)](https://github.com/joe-anidas/Clarity-Docs/network/members)
+[![GitHub issues](https://img.shields.io/github/issues/joe-anidas/Clarity-Docs)](https://github.com/joe-anidas/Clarity-Docs/issues)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+
+Made with ❤️ for everyone who's ever been confused by legal jargon
+
+**[Get Started](#-quick-start)** • **[Documentation](#-links--resources)** • **[Contribute](#-contributing)**
+
+</div>

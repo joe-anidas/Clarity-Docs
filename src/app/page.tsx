@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { FileText, ShieldCheck, Scale, Milestone, Code, Languages, BrainCircuit, ScanText, Search, Bot, Home, Briefcase, Landmark, Upload, Sparkles, Clock, MessageCircle, Target, CheckCircle, ArrowRight, Zap, Eye, Brain, Calendar, Users, FileCheck, TrendingUp, Award } from 'lucide-react';
+import { FileText, ShieldCheck, Scale, Milestone, Code, Languages, BrainCircuit, ScanText, Search, Bot, Home, Briefcase, Landmark, Upload, Sparkles, Clock, MessageCircle, Target, CheckCircle, ArrowRight, Zap, Eye, Brain, Calendar, Users, FileCheck, TrendingUp, Award, Lock, Video, History, Gavel, UserCheck } from 'lucide-react';
 import HeroActions from '@/components/layout/hero-actions';
 import Footer from '@/components/layout/footer';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
@@ -147,6 +147,13 @@ export default function LandingPage() {
                 gradient="bg-gradient-to-br from-red-500 to-red-600"
               />
               <FeatureCard
+                icon={Lock}
+                title="Privacy Protection"
+                description="Automatic sensitive data masking ensures your personal information stays secure throughout the analysis process."
+                items={['Auto data masking', 'Secure processing', 'Privacy-first storage']}
+                gradient="bg-gradient-to-br from-indigo-500 to-indigo-600"
+              />
+              <FeatureCard
                 icon={Calendar}
                 title={t('features.timeline.title')}
                 description={t('features.timeline.description')}
@@ -166,6 +173,20 @@ export default function LandingPage() {
                 description={t('features.negotiation.description')}
                 items={['Strategic suggestions', 'Polite talking points', 'Better terms advice']}
                 gradient="bg-gradient-to-br from-purple-500 to-purple-600"
+              />
+              <FeatureCard
+                icon={Gavel}
+                title="Lawyer Marketplace"
+                description="Connect with verified legal professionals for consultations, video meetings, and expert advice."
+                items={['Verified lawyers', 'Video consultations', 'Real-time chat']}
+                gradient="bg-gradient-to-br from-amber-500 to-amber-600"
+              />
+              <FeatureCard
+                icon={History}
+                title="Document History"
+                description="Automatically save and manage all your analyzed documents with quick access to past summaries."
+                items={['Auto-save documents', 'Quick access', 'Search & filter']}
+                gradient="bg-gradient-to-br from-teal-500 to-teal-600"
               />
               <FeatureCard
                 icon={Languages}
@@ -214,10 +235,11 @@ export default function LandingPage() {
                     <p className="text-muted-foreground leading-relaxed">
                       {t('howItWorks.step1.description')}
                     </p>
-                    <div className="flex justify-center gap-2">
+                    <div className="flex justify-center gap-2 flex-wrap">
                       <Badge variant="secondary" className="text-xs">PDF</Badge>
-                      <Badge variant="secondary" className="text-xs">Images</Badge>
+                      <Badge variant="secondary" className="text-xs">JPG/PNG</Badge>
                       <Badge variant="secondary" className="text-xs">Text</Badge>
+                      <Badge variant="secondary" className="text-xs">OCR</Badge>
                     </div>
                   </CardContent>
                 </Card>
@@ -243,8 +265,9 @@ export default function LandingPage() {
                     <p className="text-muted-foreground leading-relaxed">
                       {t('howItWorks.step2.description')}
                     </p>
-                    <div className="flex justify-center gap-2">
-                      <Badge variant="secondary" className="text-xs">Gemini AI</Badge>
+                    <div className="flex justify-center gap-2 flex-wrap">
+                      <Badge variant="secondary" className="text-xs">Gemini 2.5</Badge>
+                      <Badge variant="secondary" className="text-xs">Data Masking</Badge>
                       <Badge variant="secondary" className="text-xs">Fast</Badge>
                       <Badge variant="secondary" className="text-xs">Accurate</Badge>
                     </div>
@@ -271,9 +294,10 @@ export default function LandingPage() {
                   <p className="text-muted-foreground leading-relaxed">
                     {t('howItWorks.step3.description')}
                   </p>
-                  <div className="flex justify-center gap-2">
+                  <div className="flex justify-center gap-2 flex-wrap">
                     <Badge variant="secondary" className="text-xs">Interactive</Badge>
                     <Badge variant="secondary" className="text-xs">Q&A</Badge>
+                    <Badge variant="secondary" className="text-xs">Lawyer Chat</Badge>
                     <Badge variant="secondary" className="text-xs">Tips</Badge>
                   </div>
                 </CardContent>
@@ -284,6 +308,69 @@ export default function LandingPage() {
           </div>
         </section>
         
+        {/* Lawyer Marketplace Section */}
+        <section className="py-20 md:py-32 bg-gradient-to-b from-background to-secondary/10">
+          <div className="container px-4 md:px-6">
+            <div className="text-center space-y-4 mb-16">
+              <Badge variant="outline" className="px-4 py-2">
+                <Gavel className="w-4 h-4 mr-2" />
+                Expert Consultation
+              </Badge>
+              <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight">
+                Connect with
+                <span className="text-primary"> Verified Lawyers</span>
+              </h2>
+              <p className="text-lg text-muted-foreground max-w-3xl mx-auto leading-relaxed">
+                Get expert legal advice from verified professionals. Schedule video consultations, chat in real-time, and get personalized guidance for your documents.
+              </p>
+            </div>
+            
+            <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+              <Card className="text-center hover:shadow-xl transition-all duration-300 border-2 hover:border-primary/20 bg-gradient-to-b from-card to-card/50">
+                <CardHeader className="pb-4">
+                  <div className="w-16 h-16 mx-auto bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center mb-4">
+                    <UserCheck className="w-8 h-8 text-white" />
+                  </div>
+                  <CardTitle className="text-xl">Verified Lawyers</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-sm text-muted-foreground leading-relaxed">
+                    Browse profiles of verified legal professionals with ratings, specializations, and qualifications.
+                  </p>
+                </CardContent>
+              </Card>
+
+              <Card className="text-center hover:shadow-xl transition-all duration-300 border-2 hover:border-primary/20 bg-gradient-to-b from-card to-card/50">
+                <CardHeader className="pb-4">
+                  <div className="w-16 h-16 mx-auto bg-gradient-to-br from-green-500 to-green-600 rounded-2xl flex items-center justify-center mb-4">
+                    <Video className="w-8 h-8 text-white" />
+                  </div>
+                  <CardTitle className="text-xl">Video Consultations</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-sm text-muted-foreground leading-relaxed">
+                    Schedule and conduct Google Meet video consultations directly through the platform.
+                  </p>
+                </CardContent>
+              </Card>
+
+              <Card className="text-center hover:shadow-xl transition-all duration-300 border-2 hover:border-primary/20 bg-gradient-to-b from-card to-card/50">
+                <CardHeader className="pb-4">
+                  <div className="w-16 h-16 mx-auto bg-gradient-to-br from-purple-500 to-purple-600 rounded-2xl flex items-center justify-center mb-4">
+                    <MessageCircle className="w-8 h-8 text-white" />
+                  </div>
+                  <CardTitle className="text-xl">Real-time Chat</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-sm text-muted-foreground leading-relaxed">
+                    Message lawyers directly, share documents, and get instant answers to your legal questions.
+                  </p>
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+        </section>
+
         {/* Use Cases Section */}
         <section className="py-20 md:py-32 bg-gradient-to-br from-secondary/5 to-primary/5">
           <div className="container px-4 md:px-6">
@@ -379,18 +466,18 @@ export default function LandingPage() {
               </p>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-              <Card className="text-center">
+              <Card className="text-center hover:shadow-lg transition-all duration-300">
                 <CardHeader>
                     <div className="mx-auto bg-primary/10 text-primary p-3 rounded-full w-fit">
                       <Code className="w-8 h-8" />
                     </div>
                 </CardHeader>
                 <CardContent className="space-y-1">
-                  <CardTitle className="text-lg">Firebase Studio</CardTitle>
-                  <p className="text-sm text-muted-foreground">App Development</p>
+                  <CardTitle className="text-lg">Firebase</CardTitle>
+                  <p className="text-sm text-muted-foreground">Auth & Cloud Storage</p>
                 </CardContent>
               </Card>
-              <Card className="text-center">
+              <Card className="text-center hover:shadow-lg transition-all duration-300">
                 <CardHeader>
                     <div className="mx-auto bg-primary/10 text-primary p-3 rounded-full w-fit">
                       <ScanText className="w-8 h-8" />
@@ -398,21 +485,21 @@ export default function LandingPage() {
                 </CardHeader>
                 <CardContent className="space-y-1">
                   <CardTitle className="text-lg">Document AI</CardTitle>
-                  <p className="text-sm text-muted-foreground">Text Extraction</p>
+                  <p className="text-sm text-muted-foreground">OCR & Text Extraction</p>
                 </CardContent>
               </Card>
-              <Card className="text-center">
+              <Card className="text-center hover:shadow-lg transition-all duration-300">
                 <CardHeader>
                     <div className="mx-auto bg-primary/10 text-primary p-3 rounded-full w-fit">
                       <BrainCircuit className="w-8 h-8" />
                     </div>
                 </CardHeader>
                 <CardContent className="space-y-1">
-                  <CardTitle className="text-lg">Gemini API</CardTitle>
-                  <p className="text-sm text-muted-foreground">Reasoning & Analysis</p>
+                  <CardTitle className="text-lg">Gemini 2.5 Flash</CardTitle>
+                  <p className="text-sm text-muted-foreground">AI Analysis & Reasoning</p>
                 </CardContent>
               </Card>
-              <Card className="text-center">
+              <Card className="text-center hover:shadow-lg transition-all duration-300">
                 <CardHeader>
                     <div className="mx-auto bg-primary/10 text-primary p-3 rounded-full w-fit">
                       <Languages className="w-8 h-8" />
@@ -420,7 +507,31 @@ export default function LandingPage() {
                 </CardHeader>
                 <CardContent className="space-y-1">
                   <CardTitle className="text-lg">Cloud Translation</CardTitle>
-                  <p className="text-sm text-muted-foreground">Language Support</p>
+                  <p className="text-sm text-muted-foreground">Multi-language Support</p>
+                </CardContent>
+              </Card>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 max-w-2xl mx-auto mt-8">
+              <Card className="text-center hover:shadow-lg transition-all duration-300">
+                <CardHeader>
+                    <div className="mx-auto bg-primary/10 text-primary p-3 rounded-full w-fit">
+                      <Video className="w-8 h-8" />
+                    </div>
+                </CardHeader>
+                <CardContent className="space-y-1">
+                  <CardTitle className="text-lg">Google Meet</CardTitle>
+                  <p className="text-sm text-muted-foreground">Video Consultations</p>
+                </CardContent>
+              </Card>
+              <Card className="text-center hover:shadow-lg transition-all duration-300">
+                <CardHeader>
+                    <div className="mx-auto bg-primary/10 text-primary p-3 rounded-full w-fit">
+                      <Calendar className="w-8 h-8" />
+                    </div>
+                </CardHeader>
+                <CardContent className="space-y-1">
+                  <CardTitle className="text-lg">Google Calendar</CardTitle>
+                  <p className="text-sm text-muted-foreground">Appointment Scheduling</p>
                 </CardContent>
               </Card>
             </div>
@@ -438,9 +549,9 @@ export default function LandingPage() {
             </div>
             <Accordion type="single" collapsible className="w-full">
               <AccordionItem value="item-1">
-                <AccordionTrigger>Is my data secure?</AccordionTrigger>
+                <AccordionTrigger>Is my data secure and private?</AccordionTrigger>
                 <AccordionContent>
-                  Yes. We take data security very seriously. Your documents are processed securely and are not stored on our servers after the analysis is complete. All connections are encrypted.
+                  Yes. We take data security very seriously. ClarityDocs automatically masks all sensitive information (names, addresses, phone numbers, financial details, ID numbers) before processing and storage. Your original sensitive data is never stored - only masked versions are saved. All connections are encrypted and you have full control over your data.
                 </AccordionContent>
               </AccordionItem>
               <AccordionItem value="item-2">
@@ -462,9 +573,15 @@ export default function LandingPage() {
                 </AccordionContent>
               </AccordionItem>
               <AccordionItem value="item-5">
+                <AccordionTrigger>Can I connect with lawyers through ClarityDocs?</AccordionTrigger>
+                <AccordionContent>
+                  Yes! ClarityDocs includes a lawyer marketplace where you can browse verified legal professionals, request consultations, schedule video meetings via Google Meet, and chat in real-time. Lawyers can review your documents and provide expert advice.
+                </AccordionContent>
+              </AccordionItem>
+              <AccordionItem value="item-6">
                 <AccordionTrigger>Is there a free tier?</AccordionTrigger>
                 <AccordionContent>
-                  Yes! You can analyze documents for free with some limitations. Sign up to get started and explore all the features ClarityDocs has to offer.
+                  Yes! You can analyze documents for free with some limitations. Sign up to get started and explore all the features ClarityDocs has to offer, including document history and basic consultation features.
                 </AccordionContent>
               </AccordionItem>
             </Accordion>
