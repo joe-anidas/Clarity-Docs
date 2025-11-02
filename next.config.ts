@@ -34,6 +34,11 @@ const nextConfig: NextConfig = {
     config.resolve.alias['pdfjs-dist'] = 'pdfjs-dist/legacy/build/pdf';
     return config;
   },
+  turbopack: {
+    resolveAlias: {
+      'pdfjs-dist': 'pdfjs-dist/legacy/build/pdf',
+    },
+  },
 };
 
 export default nextConfig;

@@ -3,7 +3,8 @@ import { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { Button } from '@/components/ui/button';
-import { CalendarPlus, CheckCircle, ChevronDown, Copy, FileText, Languages, Loader2, MessageSquareQuote, Mic, MicOff, Milestone, MinusCircle, Pause, Play, PlusCircle, RotateCcw, Send, ThumbsDown, ThumbsUp, Volume2, VolumeX, X, XCircle } from 'lucide-react';
+import { CalendarPlus, CheckCircle, ChevronDown, Copy, FileText, Languages, Loader2, MessageSquareQuote, Mic, MicOff, Milestone, MinusCircle, Pause, Play, PlusCircle, RotateCcw, Send, ThumbsDown, ThumbsUp, Volume2, VolumeX, X, XCircle, Scale } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 import {
   Select,
   SelectContent,
@@ -89,6 +90,7 @@ const chartConfig = {
 } satisfies ChartConfig;
 
 const SummaryView = ({ originalText, summaryData, onReset, agreementType }: SummaryViewProps) => {
+  const router = useRouter();
   const [translatedSummary, setTranslatedSummary] = useState<GeneratePlainLanguageSummaryOutput['summary'] | null>(null);
   const [translatedDos, setTranslatedDos] = useState<string[] | null>(null);
   const [translatedDonts, setTranslatedDonts] = useState<string[] | null>(null);
@@ -554,6 +556,15 @@ const SummaryView = ({ originalText, summaryData, onReset, agreementType }: Summ
           <div className="flex justify-between items-center gap-2">
             <CardTitle>Clarity Panel</CardTitle>
             <div className="flex items-center gap-2">
+              <Button 
+                variant="default" 
+                size="sm"
+                onClick={() => router.push('/lawyers')}
+                className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700"
+              >
+                <Scale className="mr-2 h-4 w-4" />
+                Consult a Lawyer
+              </Button>
               <Dialog open={isDocumentDialogOpen} onOpenChange={setIsDocumentDialogOpen}>
                 <DialogTrigger asChild>
                   <Button variant="outline" size="sm">
@@ -736,6 +747,40 @@ const SummaryView = ({ originalText, summaryData, onReset, agreementType }: Summ
                            </div>
                         </>
                       )}
+
+                      {/* Consult a Lawyer CTA */}
+                      <Card className="bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-950/20 dark:to-purple-950/20 border-blue-200 dark:border-blue-800">
+                        <CardHeader>
+                          <div className="flex items-start justify-between">
+                            <div className="space-y-2">
+                              <CardTitle className="flex items-center gap-2">
+                                <Scale className="h-5 w-5 text-blue-600" />
+                                Need Expert Legal Advice?
+                              </CardTitle>
+                              <CardDescription>
+                                Connect with verified lawyers who can provide professional consultation on your contract
+                              </CardDescription>
+                            </div>
+                          </div>
+                        </CardHeader>
+                        <CardContent>
+                          <div className="flex flex-col sm:flex-row gap-3">
+                            <Button 
+                              onClick={() => router.push('/lawyers')}
+                              className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700"
+                            >
+                              <MessageSquareQuote className="mr-2 h-4 w-4" />
+                              Browse Lawyers
+                            </Button>
+                            <Button 
+                              variant="outline"
+                              onClick={() => router.push('/lawyers')}
+                            >
+                              Learn More
+                            </Button>
+                          </div>
+                        </CardContent>
+                      </Card>
 
                         {(summaryData.lockInPeriod || summaryData.noticePeriod || summaryData.effectiveDate) && (
                         <>

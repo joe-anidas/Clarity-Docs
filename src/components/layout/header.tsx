@@ -1,6 +1,6 @@
 
 'use client';
-import { FileText, LogOut, User } from 'lucide-react';
+import { FileText, LogOut, User, Scale, LayoutDashboard, Settings, Upload, Home } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
 import logo from '@/images/logo.png';
@@ -11,12 +11,18 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel,
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
 
 const Header = () => {
-  const { user, signOut, loading } = useAuth();
+  const { user, userRole, signOut, loading } = useAuth();
   const pathname = usePathname();
 
   const getInitials = (email?: string | null) => {
     if (!email) return 'U';
     return email.charAt(0).toUpperCase();
+  };
+
+  const getRoleColor = () => {
+    if (userRole === 'admin') return 'ring-2 ring-green-500';
+    if (userRole === 'lawyer') return 'ring-2 ring-purple-500';
+    return 'ring-2 ring-blue-500';
   };
 
   return (
@@ -36,12 +42,38 @@ const Header = () => {
             </Link>
           </div>
           <div className="flex items-center gap-4">
+            {user && (
+              <nav className="hidden md:flex items-center gap-2">
+                <Button asChild variant="ghost" size="sm">
+                  <Link href="/">
+                    <Home className="mr-2 h-4 w-4" />
+                    Home
+                  </Link>
+                </Button>
+                {userRole !== 'admin' && userRole !== 'lawyer' && (
+                  <Button asChild variant="ghost" size="sm">
+                    <Link href="/consultation">
+                      <Scale className="mr-2 h-4 w-4" />
+                      Consultation
+                    </Link>
+                  </Button>
+                )}
+                {userRole && (
+                  <Button asChild variant="ghost" size="sm">
+                    <Link href={userRole === 'lawyer' ? '/dashboard/lawyer' : userRole === 'admin' ? '/dashboard/admin' : '/clarity'}>
+                      <LayoutDashboard className="mr-2 h-4 w-4" />
+                      Dashboard
+                    </Link>
+                  </Button>
+                )}
+              </nav>
+            )}
             {!loading &&
               (user ? (
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
                     <Button variant="ghost" className="relative h-8 w-8 rounded-full">
-                       <Avatar className="h-9 w-9">
+                       <Avatar className={`h-9 w-9 ${getRoleColor()}`}>
                         <AvatarImage src={user.photoURL || ''} alt={user.email || ''} />
                         <AvatarFallback>{getInitials(user.email)}</AvatarFallback>
                       </Avatar>
@@ -57,6 +89,43 @@ const Header = () => {
                       </div>
                     </DropdownMenuLabel>
                     <DropdownMenuSeparator />
+                    <DropdownMenuItem asChild className="md:hidden">
+                      <Link href="/">
+                        <Home className="mr-2 h-4 w-4" />
+                        Home
+                      </Link>
+                    </DropdownMenuItem>
+                    {userRole !== 'admin' && userRole !== 'lawyer' && (
+                      <DropdownMenuItem asChild className="md:hidden">
+                        <Link href="/consultation">
+                          <Scale className="mr-2 h-4 w-4" />
+                          Consultation
+                        </Link>
+                      </DropdownMenuItem>
+                    )}
+                    {userRole && (
+                      <DropdownMenuItem asChild className="md:hidden">
+                        <Link href={userRole === 'lawyer' ? '/dashboard/lawyer' : userRole === 'admin' ? '/dashboard/admin' : '/clarity'}>
+                          <LayoutDashboard className="mr-2 h-4 w-4" />
+                          Dashboard
+                        </Link>
+                      </DropdownMenuItem>
+                    )}
+                    <DropdownMenuSeparator className="md:hidden" />
+                    {userRole === 'lawyer' && (
+                      <DropdownMenuItem asChild>
+                        <Link href="/dashboard/lawyer/profile">
+                          <User className="mr-2 h-4 w-4" />
+                          Profile
+                        </Link>
+                      </DropdownMenuItem>
+                    )}
+                    <DropdownMenuItem asChild>
+                      <Link href="/settings">
+                        <Settings className="mr-2 h-4 w-4" />
+                        Settings
+                      </Link>
+                    </DropdownMenuItem>
                     <DropdownMenuItem onClick={signOut}>
                       <LogOut className="mr-2 h-4 w-4" />
                       <span>Sign Out</span>

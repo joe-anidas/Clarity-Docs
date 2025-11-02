@@ -5,6 +5,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/components/auth/auth-provider';
+import { RoleSelectionDialog } from '@/components/auth/role-selection-dialog';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -17,7 +18,7 @@ export default function SignUpPage() {
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [isGoogleLoading, setIsGoogleLoading] = useState(false);
-  const { signUp, signInWithGoogle } = useAuth();
+  const { signUp, signInWithGoogle, showRoleSelection, selectRole } = useAuth();
   const router = useRouter();
   const { toast } = useToast();
 
@@ -41,12 +42,8 @@ export default function SignUpPage() {
   const handleGoogleSignUp = async () => {
     setIsGoogleLoading(true);
     try {
-      const result = await signInWithGoogle();
-      // If redirect method is used, result will be undefined
-      // Auth state change will handle navigation
-      if (result) {
-        router.push('/clarity');
-      }
+      await signInWithGoogle();
+      // Navigation is handled by auth provider
     } catch (error: any) {
       console.error('Google Sign Up Error:', error);
       
@@ -75,6 +72,10 @@ export default function SignUpPage() {
 
   return (
     <>
+    <RoleSelectionDialog 
+      open={showRoleSelection}
+      onSelectRole={selectRole}
+    />
     <div className="flex items-center justify-center flex-1 py-12 px-4 sm:px-6 lg:px-8">
       <Card className="w-full max-w-md">
         <CardHeader>
