@@ -61,7 +61,7 @@ function SummaryPageContent() {
       setDocumentText(text);
       setAgreementType(type);
 
-      // Generate summary
+      // Generate summary (this will also mask the text)
       const result = await summarizeDocumentAction({ documentText: text, agreementType: type });
 
       setIsLoading(false);
@@ -74,15 +74,22 @@ function SummaryPageContent() {
         });
         router.push('/clarity');
       } else if (result.summary) {
-        const summaryResult = result as GeneratePlainLanguageSummaryOutput;
+        const summaryResult = result as GeneratePlainLanguageSummaryOutput & { maskedText?: string };
         setSummaryData(summaryResult);
+        
+        // Use masked text for display and storage
+        const maskedText = summaryResult.maskedText || text;
+        setDocumentText(maskedText); // Update the state with masked text
+        
         // Save summary data to localStorage for persistence across reloads
         localStorage.setItem('claritySummaryData', JSON.stringify(summaryResult));
+        // Also update the stored document text with masked version
+        localStorage.setItem('clarityDocumentText', maskedText);
         
         // Check if we're editing an existing document
         const editingDocumentId = localStorage.getItem('clarityEditingDocumentId');
         
-        // Save or update document to Firestore history
+        // Save or update document to Firestore history (with masked content)
         if (user) {
           try {
             if (editingDocumentId) {
@@ -90,7 +97,7 @@ function SummaryPageContent() {
               await updateDocumentInHistory(editingDocumentId, {
                 documentName: `Document - ${new Date().toLocaleString()}`,
                 documentType: type || 'Other',
-                content: text,
+                content: maskedText, // Store masked content
                 summary: summaryResult,
                 fileType: 'text',
               });
@@ -105,7 +112,7 @@ function SummaryPageContent() {
               await saveDocumentToHistory(user.uid, {
                 documentName: `Document - ${new Date().toLocaleString()}`,
                 documentType: type || 'Other',
-                content: text,
+                content: maskedText, // Store masked content
                 summary: summaryResult,
                 fileType: 'text',
               });

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { ConsultationRequest } from "@/types/consultation";
 import {
@@ -65,9 +65,11 @@ export default function UserDashboardPage() {
     }
   };
 
-  const handleOpenChat = async (request: ConsultationRequest) => {
+  const handleOpenChat = useCallback(async (request: ConsultationRequest) => {
+    if (!user) return;
+    
     try {
-      const session = await getChatSessionByRequestId(request.id);
+      const session = await getChatSessionByRequestId(request.id, user.uid);
       if (session) {
         router.push(`/chat/${session.id}`);
       } else {
@@ -84,7 +86,7 @@ export default function UserDashboardPage() {
         variant: "destructive",
       });
     }
-  };
+  }, [user, router, toast]);
 
   const getStatusBadge = (status: ConsultationStatus) => {
     const config = {

@@ -1,7 +1,7 @@
 
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
 import { useToast } from '@/hooks/use-toast';
 import { Menu, Edit, Trash2, FileText } from 'lucide-react';
@@ -55,7 +55,7 @@ export default function ClarityPage() {
     }
   }, [user, isHistoryOpen]);
 
-  const loadDocumentHistory = async () => {
+  const loadDocumentHistory = useCallback(async () => {
     if (!user) return;
     
     setLoadingHistory(true);
@@ -72,9 +72,9 @@ export default function ClarityPage() {
     } finally {
       setLoadingHistory(false);
     }
-  };
+  }, [user, toast]);
 
-  const handleSummarize = (text: string, agreementType?: string) => {
+  const handleSummarize = useCallback((text: string, agreementType?: string) => {
     if (!text.trim()) {
       toast({
         variant: 'destructive',
@@ -104,7 +104,7 @@ export default function ClarityPage() {
 
     // Navigate to summary page
     router.push('/clarity/summary');
-  };
+  }, [editingDocument, router, toast]);
 
   const handleEditDocument = (document: DocumentHistory) => {
     setEditingDocument(document);

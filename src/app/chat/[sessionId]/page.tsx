@@ -30,10 +30,16 @@ export default function ChatPage() {
     setIsLoading(true);
     setError(null);
     
+    console.log("Loading chat session:", sessionId);
+    console.log("Current user:", user?.uid);
+    
     try {
       const data = await getChatSession(sessionId);
       
+      console.log("Chat session data:", data);
+      
       if (!data) {
+        console.error("Chat session not found");
         setError("Chat session not found");
         return;
       }
@@ -43,15 +49,22 @@ export default function ChatPage() {
         data.participants.userId === user?.uid ||
         data.participants.lawyerId === user?.uid;
 
+      console.log("Is participant?", isParticipant);
+      console.log("User ID:", user?.uid);
+      console.log("Participants:", data.participants);
+
       if (!isParticipant) {
+        console.error("User is not a participant");
         setError("You don't have access to this chat session");
         return;
       }
 
       setSession(data);
-    } catch (error) {
+    } catch (error: any) {
       console.error("Error loading chat session:", error);
-      setError("Failed to load chat session");
+      console.error("Error code:", error?.code);
+      console.error("Error message:", error?.message);
+      setError(error?.message || "Failed to load chat session");
     } finally {
       setIsLoading(false);
     }
@@ -112,15 +125,15 @@ export default function ChatPage() {
   const userRole = session.participants.userId === user.uid ? "user" : "lawyer";
 
   return (
-    <div className="container mx-auto py-8">
-      <div className="mb-6">
+    <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-8">
+      <div className="mb-4 sm:mb-6">
         <Button
           variant="ghost"
           onClick={() => router.back()}
-          className="mb-4"
+          className="hover:bg-muted"
         >
           <ArrowLeft className="mr-2 h-4 w-4" />
-          Back
+          Back to Consultations
         </Button>
       </div>
 
@@ -128,6 +141,7 @@ export default function ChatPage() {
         session={session}
         currentUserId={user.uid}
         currentUserRole={userRole}
+        currentUserEmail={user.email || undefined}
         onClose={handleClose}
       />
     </div>

@@ -80,9 +80,11 @@ export default function ConsultationPage() {
   };
 
   const handleOpenChat = async (request: ConsultationRequest) => {
+    if (!user) return;
+    
     try {
       const { getChatSessionByRequestId } = await import('@/lib/chat-actions');
-      const session = await getChatSessionByRequestId(request.id);
+      const session = await getChatSessionByRequestId(request.id, user.uid);
       if (session) {
         router.push(`/chat/${session.id}`);
       }
@@ -203,48 +205,51 @@ export default function ConsultationPage() {
           ) : (
             <div className="space-y-4">
               {consultations.map((request) => (
-                <Card key={request.id}>
-                  <CardHeader>
-                    <div className="flex items-start justify-between">
+                <Card key={request.id} className="hover:shadow-md transition-shadow">
+                  <CardHeader className="pb-3">
+                    <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
                       <div className="space-y-1">
-                        <CardTitle className="text-lg">
+                        <CardTitle className="text-lg flex items-center gap-2">
                           Consultation with {request.lawyerName}
                         </CardTitle>
+                        <CardDescription className="text-xs">
+                          Requested {format(request.createdAt, "PPP 'at' p")}
+                        </CardDescription>
                       </div>
                       {getStatusBadge(request.status)}
                     </div>
                   </CardHeader>
                   <CardContent className="space-y-4">
-                    <div>
-                      <p className="text-sm text-muted-foreground mb-2">Message:</p>
-                      <p className="text-sm">{request.message}</p>
+                    <div className="bg-muted/50 rounded-lg p-4">
+                      <p className="text-xs font-medium text-muted-foreground mb-1.5">Message:</p>
+                      <p className="text-sm leading-relaxed">{request.message}</p>
                     </div>
 
-                    {request.documentName && (
-                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                        <FileText className="h-4 w-4" />
-                        <span>Document: {request.documentName}</span>
-                      </div>
-                    )}
+                    <div className="flex flex-wrap gap-3">
+                      {request.documentName && (
+                        <div className="flex items-center gap-2 text-sm text-muted-foreground bg-muted/30 px-3 py-1.5 rounded-md">
+                          <FileText className="h-4 w-4" />
+                          <span className="truncate max-w-[200px]">{request.documentName}</span>
+                        </div>
+                      )}
 
-                    {request.preferredDateTime && (
-                      <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                        <Calendar className="h-4 w-4" />
-                        <span>
-                          Preferred: {format(request.preferredDateTime, "PPP")}
-                        </span>
-                      </div>
-                    )}
-
-                    <div className="text-xs text-muted-foreground">
-                      Requested {format(request.createdAt, "PPP 'at' p")}
+                      {request.preferredDateTime && (
+                        <div className="flex items-center gap-2 text-sm text-muted-foreground bg-muted/30 px-3 py-1.5 rounded-md">
+                          <Calendar className="h-4 w-4" />
+                          <span>
+                            {format(request.preferredDateTime, "PPP")}
+                          </span>
+                        </div>
+                      )}
                     </div>
 
                     {(request.status === "accepted" || request.status === "in-progress") && (
-                      <Button onClick={() => handleOpenChat(request)} size="sm">
-                        <MessageSquare className="mr-2 h-4 w-4" />
-                        Open Chat
-                      </Button>
+                      <div className="pt-2">
+                        <Button onClick={() => handleOpenChat(request)} size="sm" className="w-full sm:w-auto">
+                          <MessageSquare className="mr-2 h-4 w-4" />
+                          Open Chat
+                        </Button>
+                      </div>
                     )}
                   </CardContent>
                 </Card>

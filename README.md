@@ -26,41 +26,130 @@ ClarityDocs is an intelligent document analysis platform that uses advanced AI t
 - **Multi-format Support**: Upload PDFs, images (JPG, PNG) with OCR extraction
 - **Text Input**: Paste document content directly for instant analysis
 - **Document Type Detection**: Optimized analysis for rentals, loans, employment contracts, ToS
+- **🔒 Privacy Protection**: Automatic sensitive data masking before processing and storage
 
 ### 💬 **Negotiation Intelligence**
 - **Negotiation Suggestions**: AI-generated talking points for unfavorable clauses
 - **Real-world Examples**: "In Simple Terms" explanations with practical scenarios
 - **Multi-language Support**: Translate summaries to Hindi, Tamil, Telugu, Malayalam
 
-### � **Document History & Management**
+### ⚖️ **Lawyer Consultation & Marketplace**
+- **Verified Lawyer Network**: Browse and connect with verified legal professionals
+- **Lawyer Profiles**: View qualifications, specializations, ratings, and hourly rates
+- **Video Consultations**: Schedule and conduct Google Meet consultations directly in the app
+- **Integrated Scheduling**: Book appointments via Google Calendar integration
+- **Real-time Chat**: Message lawyers directly about your legal questions
+- **Consultation Requests**: Submit detailed requests with document attachments
+- **Lawyer Dashboard**: Legal professionals can manage consultations, availability, and client interactions
+
+### 📁 **Document History & Management**
 - **Document History**: Automatically saves all processed documents with timestamps
 - **Quick Access**: View and reload any previous document summary instantly
 - **Search & Filter**: Find past documents by name, type, or upload date
 - **Delete Control**: Remove unwanted documents from your history anytime
 
-### �🔐 **Secure & User-Friendly**
+### 🔐 **Secure & User-Friendly**
 - **Firebase Authentication**: Secure user accounts with email/password and Google OAuth
 - **Cloud Storage**: Documents securely stored in Firestore with user-level permissions
 - **Privacy-First**: Only you can access your documents - full data isolation
+- **🛡️ Data Masking**: Automatic detection and masking of sensitive information (names, addresses, phone numbers, financial details, ID numbers, etc.)
+- **Masked Storage**: All documents stored with masked sensitive data for maximum privacy
 - **Responsive Design**: Beautiful, mobile-friendly interface with dark/light themes
+
+## ⚡ Performance Optimizations
+
+ClarityDocs is built with performance in mind, featuring:
+
+### 🚀 **Frontend Optimizations**
+- **React.memo**: Memoized components to prevent unnecessary re-renders
+- **useMemo & useCallback**: Optimized expensive computations and callbacks
+- **Next.js Image Optimization**: Automatic image compression, lazy loading, and WebP/AVIF format support
+- **Code Splitting**: Dynamic imports for heavy components and routes
+- **Component Memoization**: Feature cards and UI elements are memoized for better performance
+
+### 🗄️ **Data & Caching**
+- **In-Memory Caching**: 5-minute cache for document history queries
+- **Smart Cache Invalidation**: Automatic cache updates on data changes
+- **Optimized Firebase Queries**: Limited queries with proper indexing
+- **Lazy Loading**: Components and data loaded on-demand
+
+### 🌐 **Network Optimizations**
+- **DNS Prefetching**: Pre-resolve Firebase and Google Cloud domains
+- **Resource Preloading**: Critical fonts and assets preloaded
+- **Compression**: Gzip compression enabled for all assets
+- **HTTP Headers**: Optimized security and caching headers
+
+### 📊 **Performance Monitoring**
+- **Web Vitals Tracking**: Monitors LCP, FID, and CLS metrics
+- **Performance Observer API**: Real-time performance monitoring in production
+- **Console Logging**: Development-time performance insights
+
+### 🎨 **UI/UX Optimizations**
+- **Skeleton Loading**: Smooth loading states for better perceived performance
+- **Progressive Enhancement**: Core functionality works without JavaScript
+- **Optimized Animations**: GPU-accelerated transitions and hover effects
+- **Responsive Images**: Multiple size variants for different screen sizes
+
+## 🛡️ Privacy & Data Protection
+
+ClarityDocs implements **automatic sensitive data masking** to protect your privacy:
+
+### How It Works
+1. **Upload/Paste Document** → Document text is extracted
+2. **AI-Powered Detection** → Gemini AI identifies all sensitive information
+3. **Automatic Masking** → Sensitive data is replaced with placeholders (e.g., `[PERSON_NAME_1]`, `[ADDRESS_1]`)
+4. **Secure Processing** → All analysis happens on masked content
+5. **Privacy-First Storage** → Only masked content is saved to the database
+
+### What Gets Masked
+- 👤 **Personal Names**: John Smith → `[PERSON_NAME_1]`
+- 🏢 **Organizations**: Acme Corp → `[ORGANIZATION_1]`
+- 📍 **Addresses**: 123 Main St → `[ADDRESS_1]`
+- 🏞️ **Land Details**: Survey No. 45/2A → `[LAND_DETAIL_1]`
+- 📞 **Phone Numbers**: +1-234-567-8900 → `[PHONE_NUMBER_1]`
+- 📧 **Emails**: user@example.com → `[EMAIL_1]`
+- 🪪 **ID Numbers**: Aadhar, PAN, Passport → `[ID_NUMBER_1]`
+- 💳 **Financial Data**: Account numbers, amounts → `[ACCOUNT_NUMBER_1]`
+- 🎂 **Dates of Birth**: 01/01/1990 → `[DOB_1]`
+
+### Privacy Guarantees
+✅ Original sensitive data is **never stored** in the database  
+✅ Masking happens **before** any AI processing  
+✅ All document views show **only masked content**  
+✅ Document history contains **only masked versions**  
+✅ Summary, risk analysis, and all features use **masked data**
 
 ## 🎯 Perfect For
 
+### For Users:
 - **Renters**: Understanding lease agreements and rental contracts
 - **Employees**: Reviewing employment contracts and workplace policies  
 - **Small Businesses**: Analyzing supplier agreements and service contracts
 - **Consumers**: Decoding terms of service and privacy policies
 - **Students**: Learning from legal document structures and language
 
+### For Lawyers:
+- **Expand Client Base**: Reach users who need legal consultation
+- **Virtual Consultations**: Conduct video meetings via integrated Google Meet
+- **Efficient Scheduling**: Manage appointments through Google Calendar sync
+- **Document Review**: Access client documents for consultation preparation
+- **Flexible Practice**: Set your own rates, availability, and specializations
+- **Verified Profile**: Build trust with verified credentials and user ratings
+
 ## 🚀 Quick Start
 
 ### Prerequisites
 - **Node.js** 18+ and npm
 - **Google Cloud Account** with enabled APIs:
-  - Gemini API
-  - Document AI API
-  - Translation API
-- **Firebase Project** with Authentication and Firestore enabled
+  - Gemini API (AI-powered analysis)
+  - Document AI API (OCR & text extraction)
+  - Translation API (multi-language support)
+  - Google Meet API (video consultations)
+  - Google Calendar API (appointment scheduling)
+- **Firebase Project** with the following services:
+  - Authentication (Email/Password & Google OAuth)
+  - Firestore Database (document storage)
+  - Cloud Storage (file uploads)
 
 ### Installation
 
@@ -107,6 +196,14 @@ ClarityDocs is an intelligent document analysis platform that uses advanced AI t
 
    # Private key (preserve newlines with \\n)
    GOOGLE_CLOUD_PRIVATE_KEY="-----BEGIN PRIVATE KEY-----\\nYOUR_PRIVATE_KEY_HERE\\n-----END PRIVATE KEY-----\\n"
+
+   # ========================================
+   # Google Meet & Calendar Integration
+   # ========================================
+   # For lawyer consultation scheduling and video calls
+   GOOGLE_MEET_CLIENT_ID=your_google_meet_client_id
+   GOOGLE_MEET_CLIENT_SECRET=your_google_meet_client_secret
+   GOOGLE_CALENDAR_API_KEY=your_google_calendar_api_key
    ```
 
 4. **Start Development Servers**
@@ -146,6 +243,10 @@ ClarityDocs is an intelligent document analysis platform that uses advanced AI t
 | `DOCAI_LOCATION` | Document AI Location | Usually `us` or `eu` |
 | `GOOGLE_CLOUD_CLIENT_EMAIL` | Service Account Email | Google Cloud Console → IAM → Service Accounts |
 | `GOOGLE_CLOUD_PRIVATE_KEY` | Service Account Private Key | Service Account JSON file |
+| **Google Meet & Calendar APIs (For Lawyer Consultations)** |
+| `GOOGLE_MEET_CLIENT_ID` | OAuth Client ID for Meet | Google Cloud Console → APIs & Services → Credentials |
+| `GOOGLE_MEET_CLIENT_SECRET` | OAuth Client Secret | Google Cloud Console → APIs & Services → Credentials |
+| `GOOGLE_CALENDAR_API_KEY` | Calendar API Key | Google Cloud Console → APIs & Services → Credentials |
 
 ### Setting Up Google Cloud Services
 
@@ -160,6 +261,8 @@ ClarityDocs is an intelligent document analysis platform that uses advanced AI t
    gcloud services enable aiplatform.googleapis.com
    gcloud services enable documentai.googleapis.com
    gcloud services enable translate.googleapis.com
+   gcloud services enable calendar-json.googleapis.com
+   gcloud services enable meet.googleapis.com
    ```
 
 3. **Create Service Account**
@@ -186,11 +289,28 @@ ClarityDocs is an intelligent document analysis platform that uses advanced AI t
 1. **Create Firebase Project**
    - Go to [Firebase Console](https://console.firebase.google.com/)
    - Create new project or use existing Google Cloud project
-   - Enable Authentication:
-     - Email/Password provider
-     - **Google OAuth provider** (recommended for seamless login)
 
-2. **Configure Google OAuth** (Recommended)
+2. **Enable Firebase Services**
+   
+   **Authentication**
+   - Enable Email/Password provider
+   - Enable **Google OAuth provider** (recommended for seamless login)
+   - Configure authorized domains
+   
+   **Firestore Database**
+   - Create Firestore database in production mode
+   - Set up security rules for user data isolation
+   - Enable indexes for efficient queries
+   
+   **Cloud Storage**
+   - Enable Firebase Storage for file uploads
+   - Configure CORS settings for web access
+   - Set up security rules for user-specific storage
+   
+   **Firebase Hosting** (Optional for deployment)
+   - Initialize hosting for production deployment
+
+3. **Configure Google OAuth** (Recommended)
    
    **Step A: Enable Google Provider in Firebase**
    - In Firebase Console → Authentication → Sign-in method
@@ -224,7 +344,18 @@ ClarityDocs is an intelligent document analysis platform that uses advanced AI t
    - `Access blocked: invalid request` → OAuth client not configured or disabled
    - `auth/unauthorized-domain` → Add domain to Firebase authorized domains
 
-3. **Get Firebase Config**
+4. **Configure Google Meet & Calendar APIs** (For Lawyer Consultations)
+   
+   - In Google Cloud Console → APIs & Services → Credentials
+   - Create or use existing OAuth 2.0 Client ID
+   - Add the following scopes to your OAuth consent screen:
+     - `https://www.googleapis.com/auth/calendar`
+     - `https://www.googleapis.com/auth/calendar.events`
+     - `https://www.googleapis.com/auth/meetings.space.created`
+   - Note the Client ID and Client Secret for your `.env` file
+   - See `GOOGLE_MEET_SETUP.md` for detailed configuration steps
+
+5. **Get Firebase Config**
    - Project Settings → General → Your apps
    - Add web app and copy the config values
    - All Firebase config values should go into your `.env` file (see Environment Setup above)
@@ -235,10 +366,16 @@ ClarityDocs is an intelligent document analysis platform that uses advanced AI t
 - **Frontend**: Next.js 15 (App Router), React 18, TypeScript
 - **Styling**: Tailwind CSS, shadcn/ui components
 - **AI/ML**: Google Gemini API, Genkit AI orchestration
-- **Cloud Services**: 
-  - Firebase (Auth, Hosting)
-  - Google Cloud Document AI (OCR)
-  - Google Translate API
+- **Backend Services**: 
+  - **Firebase Authentication**: User management with Email/Password & Google OAuth
+  - **Cloud Firestore**: NoSQL database for documents, user data, and lawyer profiles
+  - **Firebase Storage**: Secure file storage for document uploads and chat attachments
+  - **Firebase Hosting**: Production deployment and CDN
+- **Google Cloud APIs**: 
+  - **Document AI**: OCR and text extraction from PDFs/images
+  - **Translation API**: Multi-language support
+  - **Google Meet API**: Video consultation scheduling
+  - **Google Calendar API**: Appointment management
 - **State Management**: React Context + Hooks
 - **Form Handling**: React Hook Form + Zod validation
 
@@ -251,15 +388,47 @@ ClarityDocs is an intelligent document analysis platform that uses advanced AI t
                             │                        │
                             ▼                        ▼
                    ┌─────────────────┐    ┌─────────────────────┐
-                   │ Firebase Auth   │    │ Genkit AI Flows     │
-                   └─────────────────┘    └─────────────────────┘
-                                                   │
-                                          ┌────────┼────────┐
-                                          ▼        ▼        ▼
-                                    ┌─────────┐ ┌──────┐ ┌──────────┐
-                                    │ Gemini  │ │DocAI │ │Translate │
-                                    │   API   │ │ API  │ │   API    │
-                                    └─────────┘ └──────┘ └──────────┘
+                   │ Firebase Stack  │    │ Genkit AI Flows     │
+                   │ • Auth          │    └─────────────────────┘
+                   │ • Firestore     │             │
+                   │ • Storage       │    ┌────────┼────────────────┐
+                   │ • Hosting       │    ▼        ▼        ▼       ▼
+                   └─────────────────┘  ┌───────┐┌──────┐┌────┐┌─────────┐
+                                        │Gemini ││DocAI ││Meet││Calendar │
+                                        │  API  ││ API  ││API ││   API   │
+                                        └───────┘└──────┘└────┘└─────────┘
+```
+
+### Lawyer Consultation Flow
+
+```
+User → Browse Lawyers → Select Lawyer → Request Consultation
+                                              ↓
+                                  Lawyer Reviews Request
+                                              ↓
+                                  Schedule via Google Calendar
+                                              ↓
+                                  Generate Google Meet Link
+                                              ↓
+                                  Video Consultation Session
+                                              ↓
+                                  Real-time Chat & Document Sharing
+```
+
+### Document Processing Pipeline
+
+```
+User Upload (PDF/Image/Text)
+        ↓
+Extract Text (Document AI OCR)
+        ↓
+🛡️ MASK SENSITIVE DATA (Gemini AI)
+        ↓
+Generate Summary & Analysis
+        ↓
+Store Masked Content (Firestore)
+        ↓
+Display to User (Only Masked Data)
 ```
 
 ### Component Flow
@@ -269,7 +438,7 @@ DocumentUpload → ClarityPage → SummaryView
      ↓               ↓            ↓
 File/Text → Server Actions → AI Flows → Gemini API
      ↓               ↓            ↓
-OCR Extract → Process → Results → Interactive UI
+OCR Extract → Mask Data → Process → Results → Interactive UI
 ```
 
 ## 📁 Project Structure
@@ -278,9 +447,24 @@ OCR Extract → Process → Results → Interactive UI
 src/
 ├── app/                    # Next.js App Router
 │   ├── page.tsx           # Landing page
-│   ├── clarity/           # Main app interface  
-│   │   ├── layout.tsx     # Clarity app layout
-│   │   └── page.tsx       # Document analysis page
+│   ├── clarity/           # Document analysis
+│   │   ├── layout.tsx
+│   │   ├── page.tsx
+│   │   └── summary/
+│   │       └── page.tsx
+│   ├── lawyers/           # 🆕 Lawyer marketplace
+│   │   └── page.tsx
+│   ├── consultation/      # 🆕 Consultation requests
+│   │   └── page.tsx
+│   ├── chat/              # 🆕 Real-time messaging
+│   │   └── [sessionId]/
+│   │       └── page.tsx
+│   ├── dashboard/         # User & lawyer dashboards
+│   │   ├── user/
+│   │   ├── lawyer/
+│   │   └── admin/
+│   ├── lawyer-verification/ # 🆕 Lawyer verification portal
+│   │   └── page.tsx
 │   ├── sign-in/          # Authentication pages
 │   │   └── page.tsx
 │   ├── sign-up/
@@ -290,13 +474,19 @@ src/
 │   └── favicon.ico
 ├── components/
 │   ├── auth/             # Authentication components
-│   │   └── auth-provider.tsx
-│   ├── clarity-docs/     # Core app components
+│   │   ├── auth-provider.tsx
+│   │   └── role-selection-dialog.tsx
+│   ├── clarity-docs/     # Document analysis components
 │   │   ├── document-upload.tsx
 │   │   ├── summary-view.tsx
 │   │   ├── interactive-text.tsx
 │   │   ├── term-lookup-popover.tsx
 │   │   └── summary-skeleton.tsx
+│   ├── lawyer/           # 🆕 Lawyer-specific components
+│   │   ├── lawyer-card.tsx
+│   │   ├── lawyer-list.tsx
+│   │   ├── consultation-request-form.tsx
+│   │   └── chat-interface.tsx
 │   ├── layout/           # Navigation & layout
 │   │   ├── header.tsx
 │   │   ├── app-header.tsx
@@ -313,6 +503,7 @@ src/
 │   │   ├── lookup-term-definitions.ts
 │   │   ├── generate-examples.ts
 │   │   ├── generate-negotiation-suggestions.ts
+│   │   ├── mask-sensitive-data.ts           # 🛡️ NEW: Privacy protection
 │   │   └── process-document-flow.ts
 │   ├── genkit.ts        # AI configuration
 │   └── dev.ts           # Genkit development server
@@ -324,8 +515,16 @@ src/
 ├── lib/
 │   ├── actions.ts       # Server actions
 │   ├── firebase.ts      # Firebase configuration
+│   ├── firestore-actions.ts  # Database operations
+│   ├── storage-actions.ts    # File storage operations
+│   ├── chat-actions.ts       # 🆕 Real-time chat operations
+│   ├── lawyer-actions.ts     # 🆕 Lawyer profile & consultation management
+│   ├── google-meet-actions.ts # 🆕 Google Meet integration
 │   ├── utils.ts         # Utility functions
 │   └── env.d.ts         # Environment types
+├── types/
+│   ├── lawyer.ts        # 🆕 Lawyer & consultation types
+│   └── consultation.ts  # 🆕 Consultation request types
 └── images/
     ├── logo.png
     └── cover.png
@@ -367,6 +566,7 @@ ClarityDocs uses **Genkit** for AI orchestration. Each analysis feature correspo
 - `lookup-term-definitions.ts` - Legal term explanations
 - `generate-examples.ts` - Real-world examples
 - `generate-negotiation-suggestions.ts` - Negotiation tips
+- `mask-sensitive-data.ts` - 🛡️ **Privacy protection & data masking**
 - `process-document-flow.ts` - Document processing pipeline
 
 ### Adding New Features
@@ -377,6 +577,22 @@ ClarityDocs uses **Genkit** for AI orchestration. Each analysis feature correspo
 4. **Integration**: Connect in `SummaryView.tsx`
 
 ## 🔐 Security Best Practices
+
+### Privacy & Data Protection
+- 🛡️ **Automatic Data Masking**: All sensitive information is automatically detected and masked
+- 🔒 **Masked Storage**: Only masked content is stored in Firestore (never original sensitive data)
+- 🎯 **Comprehensive Coverage**: Masks names, addresses, phone numbers, emails, ID numbers, financial details, land details, and dates of birth
+- ✅ **Privacy-First Processing**: Masking happens immediately after document text extraction, before any AI processing or storage
+
+### Sensitive Data Handling
+The application automatically masks the following types of information:
+- **Personal Names**: Individuals and organizations → `[PERSON_NAME_1]`, `[ORGANIZATION_1]`
+- **Addresses**: Complete addresses, streets, cities → `[ADDRESS_1]`
+- **Land Details**: Survey numbers, plot numbers → `[LAND_DETAIL_1]`
+- **Contact Info**: Phone numbers, emails → `[PHONE_NUMBER_1]`, `[EMAIL_1]`
+- **ID Numbers**: Aadhar, PAN, passport, etc. → `[ID_NUMBER_1]`
+- **Financial Data**: Account numbers, amounts → `[ACCOUNT_NUMBER_1]`, `[AMOUNT_1]`
+- **Dates of Birth**: Personal DOB references → `[DOB_1]`
 
 ### Environment Variables
 - ✅ Use `NEXT_PUBLIC_` prefix for client-side variables only

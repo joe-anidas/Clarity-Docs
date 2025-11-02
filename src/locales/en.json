@@ -1,0 +1,142 @@
+{
+  "hero": {
+    "badge": "AI-Powered Document Analysis",
+    "title": "Understand",
+    "titleHighlight": "Any Document",
+    "titleEnd": "Instantly",
+    "description": "Transform complex legal documents into clear insights with AI-powered analysis, risk scoring, and negotiation tips."
+  },
+  "features": {
+    "badge": "Powerful Features",
+    "title": "Your Complete Document",
+    "titleHighlight": " Analysis Suite",
+    "description": "Transform any document into actionable insights with our comprehensive AI-powered analysis tools. From risk assessment to negotiation strategies.",
+    "aiSummaries": {
+      "title": "AI-Powered Summaries",
+      "description": "Get instant, clear summaries of complex documents in plain language. Perfect for quick understanding without legal jargon."
+    },
+    "riskAnalysis": {
+      "title": "Smart Risk Analysis",
+      "description": "Identify potential risks and red flags automatically. Our AI highlights concerns with severity scores."
+    },
+    "timeline": {
+      "title": "Interactive Timeline",
+      "description": "Visualize important dates, milestones, and deadlines in an easy-to-understand timeline view."
+    },
+    "whatIf": {
+      "title": "What-If Scenarios",
+      "description": "Explore different scenarios and understand potential outcomes before making decisions."
+    },
+    "negotiation": {
+      "title": "Negotiation Help",
+      "description": "Get AI-powered suggestions for negotiation points and alternative clauses to strengthen your position."
+    },
+    "multiLanguage": {
+      "title": "Multi-Language Support",
+      "description": "Analyze documents in multiple languages with automatic translation and localized insights."
+    }
+  },
+  "howItWorks": {
+    "badge": "Simple Process",
+    "title": "How It Works",
+    "description": "Get started with ClarityDocs in three simple steps. No legal expertise required.",
+    "step1": {
+      "title": "Upload or Paste",
+      "description": "Simply upload your document or paste the text. We support PDF, DOCX, and plain text formats."
+    },
+    "step2": {
+      "title": "AI Analysis",
+      "description": "Our advanced AI analyzes your document, extracting key information, risks, and important clauses."
+    },
+    "step3": {
+      "title": "Explore & Understand",
+      "description": "Review summaries, timelines, risk scores, and get negotiation suggestions in an interactive interface."
+    }
+  },
+  "useCases": {
+    "badge": "Use Cases",
+    "title": "Perfect for Every",
+    "titleHighlight": " Legal Document",
+    "description": "Whether you're signing a lease, accepting a job offer, or reviewing terms of service, ClarityDocs helps you understand what matters.",
+    "rental": {
+      "title": "Rental Agreements",
+      "description": "Understand your rights and obligations before signing a lease."
+    },
+    "employment": {
+      "title": "Employment Contracts",
+      "description": "Review salary terms, benefits, and non-compete clauses with confidence."
+    },
+    "loan": {
+      "title": "Loan Agreements",
+      "description": "Understand interest rates, payment terms, and hidden fees clearly."
+    },
+    "tos": {
+      "title": "Terms of Service",
+      "description": "Know what you're agreeing to with online services and platforms."
+    }
+  },
+  "technology": {
+    "badge": "Technology",
+    "title": "Powered by",
+    "titleHighlight": " Cutting-Edge AI",
+    "description": "Built with the latest in artificial intelligence and cloud technology to deliver accurate, fast, and secure document analysis.",
+    "firebase": {
+      "title": "Firebase Studio",
+      "description": "Secure cloud infrastructure and real-time data synchronization."
+    },
+    "documentAI": {
+      "title": "Document AI",
+      "description": "Advanced OCR and document structure understanding."
+    },
+    "gemini": {
+      "title": "Gemini API",
+      "description": "State-of-the-art natural language processing and generation."
+    },
+    "translation": {
+      "title": "Cloud Translation",
+      "description": "Multi-language support with accurate translations."
+    }
+  },
+  "faq": {
+    "title": "Frequently Asked",
+    "titleHighlight": " Questions",
+    "q1": {
+      "question": "Is my document data secure?",
+      "answer": "Yes, absolutely. We use enterprise-grade encryption and secure cloud storage. Your documents are processed securely and you have full control over your data. We never share your documents with third parties."
+    },
+    "q2": {
+      "question": "What document formats are supported?",
+      "answer": "ClarityDocs supports PDF, DOCX (Microsoft Word), and plain text formats. You can also directly paste text into our interface. We're constantly adding support for more formats."
+    },
+    "q3": {
+      "question": "How accurate is the AI analysis?",
+      "answer": "Our AI is trained on millions of legal documents and uses state-of-the-art language models. While highly accurate, we always recommend consulting with a legal professional for critical decisions. ClarityDocs is a powerful tool to help you understand documents, not replace legal advice."
+    },
+    "q4": {
+      "question": "Can I use this for business contracts?",
+      "answer": "Yes! ClarityDocs is suitable for both personal and business use. Many professionals use our platform to quickly review contracts, NDAs, service agreements, and other business documents."
+    },
+    "q5": {
+      "question": "What languages are supported?",
+      "answer": "Currently, we support analysis and translation for over 50 languages including English, Spanish, French, German, Chinese, Japanese, and Hindi. The AI can understand and analyze documents in any of these languages."
+    },
+    "q6": {
+      "question": "Do I need legal knowledge to use ClarityDocs?",
+      "answer": "Not at all! ClarityDocs is designed specifically for people without legal expertise. We break down complex legal jargon into plain language that anyone can understand. That's our core mission."
+    }
+  },
+  "cta": {
+    "title": "Ready to Understand Your Documents?",
+    "description": "Join thousands of users who trust ClarityDocs for clear, actionable document insights.",
+    "button": "Get Started for Free",
+    "subtitle": "No credit card required • Free forever"
+  },
+  "common": {
+    "getStarted": "Get Started",
+    "learnMore": "Learn More",
+    "tryNow": "Try It Now",
+    "upload": "Upload Document",
+    "signIn": "Sign In",
+    "signUp": "Sign Up"
+  }
+}

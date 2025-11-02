@@ -1,6 +1,8 @@
+'use client';
 
 import Link from 'next/link';
 import Image from 'next/image';
+import { useTranslation } from 'react-i18next';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -9,10 +11,42 @@ import HeroActions from '@/components/layout/hero-actions';
 import Footer from '@/components/layout/footer';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import cover from '@/images/cover.png';
-import logo from '@/images/logo.png';
+import { memo } from 'react';
+
+// Memoized Feature Card component
+const FeatureCard = memo(({ icon: Icon, title, description, items, gradient }: {
+  icon: any;
+  title: string;
+  description: string;
+  items: string[];
+  gradient: string;
+}) => (
+  <Card className="group hover:shadow-xl transition-all duration-300 border-2 hover:border-primary/20 bg-gradient-to-br from-card to-card/50">
+    <CardHeader className="pb-4">
+      <div className={`w-12 h-12 rounded-xl ${gradient} flex items-center justify-center mb-4 group-hover:scale-110 transition-transform`}>
+        <Icon className="w-6 h-6 text-white" />
+      </div>
+      <CardTitle className="text-xl">{title}</CardTitle>
+      <CardDescription>{description}</CardDescription>
+    </CardHeader>
+    <CardContent>
+      <div className="space-y-2 text-sm text-muted-foreground">
+        {items.map((item, idx) => (
+          <div key={idx} className="flex items-center gap-2">
+            <CheckCircle className="w-4 h-4 text-green-500" />
+            <span>{item}</span>
+          </div>
+        ))}
+      </div>
+    </CardContent>
+  </Card>
+));
+
+FeatureCard.displayName = 'FeatureCard';
 
 
 export default function LandingPage() {
+  const { t } = useTranslation();
   return (
     <>
       <main className="flex-1 w-full bg-background text-foreground">
@@ -24,19 +58,19 @@ export default function LandingPage() {
               <div className="space-y-10">
                 <div className="space-y-6">
                   <div className="inline-flex items-center rounded-full border px-6 py-2 text-sm font-medium bg-background/50 backdrop-blur-sm">
-                    AI-Powered Document Analysis
+                    {t('hero.badge')}
                   </div>
                   
                   <h1 className="text-5xl md:text-5xl lg:text-6xl font-bold tracking-tight">
-                    Understand
+                    {t('hero.title')}
                     <span className="block text-transparent bg-clip-text bg-gradient-to-r from-primary via-primary to-blue-600">
-                      Any Document
+                      {t('hero.titleHighlight')}
                     </span>
-                    <span className="block">Instantly</span>
+                    <span className="block">{t('hero.titleEnd')}</span>
                   </h1>
                   
                   <p className="text-xl md:text-1xl text-muted-foreground font-light leading-relaxed max-w-[580px]">
-                    Transform complex legal documents into clear insights with AI-powered analysis, risk scoring, and negotiation tips.
+                    {t('hero.description')}
                   </p>
                   <div className="flex flex-col sm:flex-row gap-4 pt-4">
                   <HeroActions />
@@ -61,6 +95,8 @@ export default function LandingPage() {
                       alt="ClarityDocs Dashboard"
                       className="w-full h-auto rounded-2xl"
                       priority
+                      quality={90}
+                      placeholder="blur"
                     />
                   </div>
                   
@@ -84,192 +120,60 @@ export default function LandingPage() {
             <div className="text-center space-y-4 mb-16">
               <Badge variant="outline" className="px-4 py-2">
                 <Sparkles className="w-4 h-4 mr-2" />
-                Powerful Features
+                {t('features.badge')}
               </Badge>
               <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight">
-                Your Complete Document
-                <span className="text-primary"> Analysis Suite</span>
+                {t('features.title')}
+                <span className="text-primary">{t('features.titleHighlight')}</span>
               </h2>
               <p className="text-lg text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-                Transform any document into actionable insights with our comprehensive AI-powered analysis tools. 
-                From risk assessment to negotiation strategies.
+                {t('features.description')}
               </p>
             </div>
             
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
-              {/* Feature Card 1 */}
-              <Card className="group hover:shadow-xl transition-all duration-300 border-2 hover:border-primary/20 bg-gradient-to-br from-card to-card/50">
-                <CardHeader className="pb-4">
-                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary to-primary/60 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                    <Brain className="w-6 h-6 text-primary-foreground" />
-                  </div>
-                  <CardTitle className="text-xl">AI-Powered Summaries</CardTitle>
-                  <CardDescription>
-                    Get instant plain-language summaries with key points, do's and don'ts clearly highlighted.
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-2 text-sm text-muted-foreground">
-                    <div className="flex items-center gap-2">
-                      <CheckCircle className="w-4 h-4 text-green-500" />
-                      <span>Structured key points</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <CheckCircle className="w-4 h-4 text-green-500" />
-                      <span>Legal term definitions</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <CheckCircle className="w-4 h-4 text-green-500" />
-                      <span>Actionable recommendations</span>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-
-              {/* Feature Card 2 */}
-              <Card className="group hover:shadow-xl transition-all duration-300 border-2 hover:border-primary/20 bg-gradient-to-br from-card to-card/50">
-                <CardHeader className="pb-4">
-                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-red-500 to-red-600 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                    <ShieldCheck className="w-6 h-6 text-white" />
-                  </div>
-                  <CardTitle className="text-xl">Smart Risk Analysis</CardTitle>
-                  <CardDescription>
-                    Get comprehensive risk scores with visual breakdowns and tone analysis of key clauses.
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-2 text-sm text-muted-foreground">
-                    <div className="flex items-center gap-2">
-                      <CheckCircle className="w-4 h-4 text-green-500" />
-                      <span>0-100 risk scoring</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <CheckCircle className="w-4 h-4 text-green-500" />
-                      <span>Positive/negative factors</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <CheckCircle className="w-4 h-4 text-green-500" />
-                      <span>Tone analysis</span>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-
-              {/* Feature Card 3 */}
-              <Card className="group hover:shadow-xl transition-all duration-300 border-2 hover:border-primary/20 bg-gradient-to-br from-card to-card/50">
-                <CardHeader className="pb-4">
-                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                    <Calendar className="w-6 h-6 text-white" />
-                  </div>
-                  <CardTitle className="text-xl">Interactive Timeline</CardTitle>
-                  <CardDescription>
-                    Visualize key dates, deadlines, and milestones with our smart timeline extraction.
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-2 text-sm text-muted-foreground">
-                    <div className="flex items-center gap-2">
-                      <CheckCircle className="w-4 h-4 text-green-500" />
-                      <span>Automatic date extraction</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <CheckCircle className="w-4 h-4 text-green-500" />
-                      <span>Visual timeline</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <CheckCircle className="w-4 h-4 text-green-500" />
-                      <span>Deadline reminders</span>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-
-              {/* Feature Card 4 */}
-              <Card className="group hover:shadow-xl transition-all duration-300 border-2 hover:border-primary/20 bg-gradient-to-br from-card to-card/50">
-                <CardHeader className="pb-4">
-                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-green-500 to-green-600 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                    <MessageCircle className="w-6 h-6 text-white" />
-                  </div>
-                  <CardTitle className="text-xl">What-If Scenarios</CardTitle>
-                  <CardDescription>
-                    Ask questions about your document and get AI-powered answers to understand implications.
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-2 text-sm text-muted-foreground">
-                    <div className="flex items-center gap-2">
-                      <CheckCircle className="w-4 h-4 text-green-500" />
-                      <span>Interactive Q&A</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <CheckCircle className="w-4 h-4 text-green-500" />
-                      <span>Scenario analysis</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <CheckCircle className="w-4 h-4 text-green-500" />
-                      <span>Smart suggestions</span>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-
-              {/* Feature Card 5 */}
-              <Card className="group hover:shadow-xl transition-all duration-300 border-2 hover:border-primary/20 bg-gradient-to-br from-card to-card/50">
-                <CardHeader className="pb-4">
-                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-purple-500 to-purple-600 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                    <Scale className="w-6 h-6 text-white" />
-                  </div>
-                  <CardTitle className="text-xl">Negotiation Help</CardTitle>
-                  <CardDescription>
-                    Get strategic talking points and suggestions to negotiate better terms confidently.
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-2 text-sm text-muted-foreground">
-                    <div className="flex items-center gap-2">
-                      <CheckCircle className="w-4 h-4 text-green-500" />
-                      <span>Strategic suggestions</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <CheckCircle className="w-4 h-4 text-green-500" />
-                      <span>Polite talking points</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <CheckCircle className="w-4 h-4 text-green-500" />
-                      <span>Better terms advice</span>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-
-              {/* Feature Card 6 */}
-              <Card className="group hover:shadow-xl transition-all duration-300 border-2 hover:border-primary/20 bg-gradient-to-br from-card to-card/50">
-                <CardHeader className="pb-4">
-                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-orange-500 to-orange-600 flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
-                    <Languages className="w-6 h-6 text-white" />
-                  </div>
-                  <CardTitle className="text-xl">Multi-Language Support</CardTitle>
-                  <CardDescription>
-                    Translate summaries into multiple languages including Hindi, Tamil, Telugu, and Malayalam.
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="space-y-2 text-sm text-muted-foreground">
-                    <div className="flex items-center gap-2">
-                      <CheckCircle className="w-4 h-4 text-green-500" />
-                      <span>Multiple languages</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <CheckCircle className="w-4 h-4 text-green-500" />
-                      <span>Instant translation</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <CheckCircle className="w-4 h-4 text-green-500" />
-                      <span>Localized content</span>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
+              <FeatureCard
+                icon={Brain}
+                title={t('features.aiSummaries.title')}
+                description={t('features.aiSummaries.description')}
+                items={['Structured key points', 'Legal term definitions', 'Actionable recommendations']}
+                gradient="bg-gradient-to-br from-primary to-primary/60"
+              />
+              <FeatureCard
+                icon={ShieldCheck}
+                title={t('features.riskAnalysis.title')}
+                description={t('features.riskAnalysis.description')}
+                items={['0-100 risk scoring', 'Positive/negative factors', 'Tone analysis']}
+                gradient="bg-gradient-to-br from-red-500 to-red-600"
+              />
+              <FeatureCard
+                icon={Calendar}
+                title={t('features.timeline.title')}
+                description={t('features.timeline.description')}
+                items={['Automatic date extraction', 'Visual timeline', 'Deadline reminders']}
+                gradient="bg-gradient-to-br from-blue-500 to-blue-600"
+              />
+              <FeatureCard
+                icon={MessageCircle}
+                title={t('features.whatIf.title')}
+                description={t('features.whatIf.description')}
+                items={['Interactive Q&A', 'Scenario analysis', 'Smart suggestions']}
+                gradient="bg-gradient-to-br from-green-500 to-green-600"
+              />
+              <FeatureCard
+                icon={Scale}
+                title={t('features.negotiation.title')}
+                description={t('features.negotiation.description')}
+                items={['Strategic suggestions', 'Polite talking points', 'Better terms advice']}
+                gradient="bg-gradient-to-br from-purple-500 to-purple-600"
+              />
+              <FeatureCard
+                icon={Languages}
+                title={t('features.multiLanguage.title')}
+                description={t('features.multiLanguage.description')}
+                items={['Multiple languages', 'Instant translation', 'Localized content']}
+                gradient="bg-gradient-to-br from-orange-500 to-orange-600"
+              />
             </div>
           </div>
         </section>
@@ -280,14 +184,14 @@ export default function LandingPage() {
             <div className="text-center space-y-4 mb-16">
               <Badge variant="outline" className="px-4 py-2">
                 <Target className="w-4 h-4 mr-2" />
-                How It Works
+                {t('howItWorks.badge')}
               </Badge>
               <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight">
-                Get Clarity in
+                {t('howItWorks.title')}
                 <span className="text-primary"> 3 Simple Steps</span>
               </h2>
               <p className="text-lg text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-                Our intuitive process transforms complex documents into clear, actionable insights in minutes, not hours.
+                {t('howItWorks.description')}
               </p>
             </div>
             
@@ -304,11 +208,11 @@ export default function LandingPage() {
                         1
                       </div>
                     </div>
-                    <CardTitle className="text-xl mb-2">Upload or Paste</CardTitle>
+                    <CardTitle className="text-xl mb-2">{t('howItWorks.step1.title')}</CardTitle>
                   </CardHeader>
                   <CardContent className="space-y-3">
                     <p className="text-muted-foreground leading-relaxed">
-                      Securely upload PDF files, images, or paste text directly. Our AI supports multiple formats with advanced OCR.
+                      {t('howItWorks.step1.description')}
                     </p>
                     <div className="flex justify-center gap-2">
                       <Badge variant="secondary" className="text-xs">PDF</Badge>
@@ -333,11 +237,11 @@ export default function LandingPage() {
                         2
                       </div>
                     </div>
-                    <CardTitle className="text-xl mb-2">AI Analysis</CardTitle>
+                    <CardTitle className="text-xl mb-2">{t('howItWorks.step2.title')}</CardTitle>
                   </CardHeader>
                   <CardContent className="space-y-3">
                     <p className="text-muted-foreground leading-relaxed">
-                      Our advanced AI analyzes your document, generating summaries, risk scores, timelines, and insights instantly.
+                      {t('howItWorks.step2.description')}
                     </p>
                     <div className="flex justify-center gap-2">
                       <Badge variant="secondary" className="text-xs">Gemini AI</Badge>
@@ -361,11 +265,11 @@ export default function LandingPage() {
                       3
                     </div>
                   </div>
-                  <CardTitle className="text-xl mb-2">Explore & Understand</CardTitle>
+                  <CardTitle className="text-xl mb-2">{t('howItWorks.step3.title')}</CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-3">
                   <p className="text-muted-foreground leading-relaxed">
-                    Interact with your analysis, ask questions, explore timelines, and get negotiation tips to make informed decisions.
+                    {t('howItWorks.step3.description')}
                   </p>
                   <div className="flex justify-center gap-2">
                     <Badge variant="secondary" className="text-xs">Interactive</Badge>

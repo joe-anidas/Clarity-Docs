@@ -40,14 +40,12 @@ export async function createConsultationRequest(
   try {
     const requestRef = collection(db, "consultationRequests");
     
-    const requestData = {
+    const requestData: any = {
       userId,
       userName,
       userEmail,
       lawyerId,
       lawyerName,
-      documentId,
-      documentName,
       status: "pending" as ConsultationStatus,
       message,
       urgency,
@@ -55,6 +53,14 @@ export async function createConsultationRequest(
       createdAt: Timestamp.now(),
       updatedAt: Timestamp.now(),
     };
+
+    // Only include documentId and documentName if they are provided
+    if (documentId) {
+      requestData.documentId = documentId;
+    }
+    if (documentName) {
+      requestData.documentName = documentName;
+    }
 
     const docRef = await addDoc(requestRef, requestData);
 
@@ -191,8 +197,10 @@ export async function updateConsultationStatus(
           requestId,
           request.userId,
           request.userName,
+          request.userEmail,
           request.lawyerId,
-          request.lawyerName
+          request.lawyerName,
+          request.lawyerEmail || "lawyer@claritydocs.com" // fallback email
         );
       }
     }
@@ -209,8 +217,10 @@ export async function createChatSession(
   consultationRequestId: string,
   userId: string,
   userName: string,
+  userEmail: string,
   lawyerId: string,
-  lawyerName: string
+  lawyerName: string,
+  lawyerEmail: string
 ): Promise<{ success: boolean; error?: string; sessionId?: string }> {
   try {
     const sessionRef = collection(db, "chatSessions");
@@ -220,8 +230,10 @@ export async function createChatSession(
       participants: {
         userId,
         userName,
+        userEmail,
         lawyerId,
         lawyerName,
+        lawyerEmail,
       },
       status: "active",
       startedAt: Timestamp.now(),
@@ -249,9 +261,11 @@ export async function createChatSession(
 
 // Get chat session by consultation request ID
 export async function getChatSessionByRequestId(
-  requestId: string
+  requestId: string,
+  userId: string
 ): Promise<ChatSession | null> {
   try {
+    // Query with user participation constraint to satisfy security rules
     const sessionsQuery = query(
       collection(db, "chatSessions"),
       where("consultationRequestId", "==", requestId),
@@ -266,6 +280,16 @@ export async function getChatSessionByRequestId(
 
     const doc = querySnapshot.docs[0];
     const data = doc.data();
+    
+    // Verify user is a participant
+    const isParticipant = 
+      data.participants.userId === userId || 
+      data.participants.lawyerId === userId;
+      
+    if (!isParticipant) {
+      console.error("User is not a participant in this chat session");
+      return null;
+    }
     
     return {
       id: doc.id,
@@ -320,18 +344,24 @@ export async function sendChatMessage(
   try {
     const messagesRef = collection(db, "chatSessions", sessionId, "messages");
     
-    const messageData = {
+    const messageData: any = {
       sessionId,
       senderId,
       senderName,
       senderRole,
       message,
       messageType,
-      attachmentUrl,
-      attachmentName,
       createdAt: Timestamp.now(),
       read: false,
     };
+
+    // Only include attachmentUrl and attachmentName if they are provided
+    if (attachmentUrl) {
+      messageData.attachmentUrl = attachmentUrl;
+    }
+    if (attachmentName) {
+      messageData.attachmentName = attachmentName;
+    }
 
     const docRef = await addDoc(messagesRef, messageData);
 
@@ -381,17 +411,20 @@ export async function markMessagesAsRead(
   userId: string
 ): Promise<{ success: boolean; error?: string }> {
   try {
+    // Query all unread messages in the session
     const messagesQuery = query(
       collection(db, "chatSessions", sessionId, "messages"),
-      where("senderId", "!=", userId),
       where("read", "==", false)
     );
 
     const querySnapshot = await getDocs(messagesQuery);
     
-    const updatePromises = querySnapshot.docs.map((doc: QueryDocumentSnapshot<DocumentData>) =>
-      updateDoc(doc.ref, { read: true })
-    );
+    // Filter client-side to only mark messages from others as read
+    const updatePromises = querySnapshot.docs
+      .filter((doc) => doc.data().senderId !== userId)
+      .map((doc: QueryDocumentSnapshot<DocumentData>) =>
+        updateDoc(doc.ref, { read: true })
+      );
 
     await Promise.all(updatePromises);
 

@@ -5,7 +5,7 @@ import { useRef, useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Textarea } from '@/components/ui/textarea';
-import { UploadCloud, Sparkles, Loader2, FileUp, X } from 'lucide-react';
+import { UploadCloud, Sparkles, Loader2, FileUp, X, Shield } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 import { Separator } from '../ui/separator';
 import { processDocumentAction } from '@/lib/actions';
@@ -13,6 +13,7 @@ import { Label } from '../ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../ui/select';
 import { DocumentHistory } from '@/lib/firestore-actions';
 import { Badge } from '../ui/badge';
+import { Alert, AlertDescription } from '../ui/alert';
 
 
 type DocumentUploadProps = {
@@ -133,6 +134,13 @@ const DocumentUpload = ({ onSummarize, isLoading = false, initialDocument, onCle
             </CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
+            <Alert className="bg-blue-50 dark:bg-blue-950 border-blue-200 dark:border-blue-800">
+              <Shield className="h-4 w-4 text-blue-600 dark:text-blue-400" />
+              <AlertDescription className="text-blue-800 dark:text-blue-200 text-sm">
+                <strong>Privacy Protection:</strong> All sensitive information (names, addresses, phone numbers, financial details, etc.) is automatically masked before processing and storage.
+              </AlertDescription>
+            </Alert>
+            
              <input
               type="file"
               ref={fileInputRef}

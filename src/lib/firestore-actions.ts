@@ -13,7 +13,12 @@ import {
   doc,
   updateDoc,
   Timestamp,
+  getDoc,
 } from 'firebase/firestore';
+
+// Simple in-memory cache for document history
+const documentCache = new Map<string, { data: DocumentHistory[], timestamp: number }>();
+const CACHE_DURATION = 5 * 60 * 1000; // 5 minutes
 
 export interface DocumentHistory {
   id?: string;
@@ -40,6 +45,10 @@ export async function saveDocumentToHistory(
       ...documentData,
       uploadedAt: Timestamp.now(),
     });
+    
+    // Invalidate cache when new document is added
+    documentCache.delete(userId);
+    
     return docRef.id;
   } catch (error) {
     console.error('Error saving document to history:', error);
@@ -48,15 +57,25 @@ export async function saveDocumentToHistory(
 }
 
 /**
- * Get all documents for a specific user, sorted by most recent
+ * Get all documents for a specific user, sorted by most recent (with caching)
  */
 export async function getUserDocumentHistory(
   userId: string,
-  limitCount: number = 50
+  limitCount: number = 50,
+  forceRefresh: boolean = false
 ): Promise<DocumentHistory[]> {
   try {
     if (!userId) {
       throw new Error('User ID is required');
+    }
+
+    // Check cache first
+    if (!forceRefresh) {
+      const cached = documentCache.get(userId);
+      if (cached && Date.now() - cached.timestamp < CACHE_DURATION) {
+        console.log('Returning cached document history for userId:', userId);
+        return cached.data;
+      }
     }
 
     console.log('Fetching document history for userId:', userId);
@@ -86,6 +105,9 @@ export async function getUserDocumentHistory(
       });
     });
 
+    // Cache the results
+    documentCache.set(userId, { data: documents, timestamp: Date.now() });
+
     console.log('Successfully fetched', documents.length, 'documents');
     return documents;
   } catch (error: any) {
@@ -107,10 +129,16 @@ export async function getUserDocumentHistory(
  * Delete a document from history
  */
 export async function deleteDocumentFromHistory(
-  documentId: string
+  documentId: string,
+  userId?: string
 ): Promise<void> {
   try {
     await deleteDoc(doc(db, 'documentHistory', documentId));
+    
+    // Invalidate cache when document is deleted
+    if (userId) {
+      documentCache.delete(userId);
+    }
   } catch (error) {
     console.error('Error deleting document:', error);
     throw new Error('Failed to delete document');

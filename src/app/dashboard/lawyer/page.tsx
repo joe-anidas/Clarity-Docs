@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { ConsultationRequest, ConsultationStatus } from "@/types/consultation";
 import {
@@ -60,28 +60,8 @@ export default function LawyerDashboardPage() {
   const router = useRouter();
   const { toast } = useToast();
 
-  // Role-based access control
-  useEffect(() => {
-    if (!loading && !user) {
-      router.push('/sign-in');
-    } else if (!loading && user && userRole !== 'lawyer' && userRole !== 'admin') {
-      toast({
-        title: "Access Denied",
-        description: "You need a lawyer account to access this page",
-        variant: "destructive",
-      });
-      router.push('/dashboard/user');
-    }
-  }, [user, userRole, loading, router, toast]);
-
-  useEffect(() => {
-    if (user && (userRole === 'lawyer' || userRole === 'admin')) {
-      loadRequests();
-      loadVerificationStatus();
-    }
-  }, [user]);
-
-  const loadVerificationStatus = async () => {
+  // Memoized functions to prevent unnecessary re-renders
+  const loadVerificationStatus = useCallback(async () => {
     if (!user) return;
     
     setLoadingVerification(true);
@@ -103,9 +83,9 @@ export default function LawyerDashboardPage() {
     } finally {
       setLoadingVerification(false);
     }
-  };
+  }, [user]);
 
-  const loadRequests = async () => {
+  const loadRequests = useCallback(async () => {
     if (!user) return;
     
     setIsLoading(true);
@@ -122,7 +102,28 @@ export default function LawyerDashboardPage() {
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [user, toast]);
+
+  // Role-based access control
+  useEffect(() => {
+    if (!loading && !user) {
+      router.push('/sign-in');
+    } else if (!loading && user && userRole !== 'lawyer' && userRole !== 'admin') {
+      toast({
+        title: "Access Denied",
+        description: "You need a lawyer account to access this page",
+        variant: "destructive",
+      });
+      router.push('/dashboard/user');
+    }
+  }, [user, userRole, loading, router, toast]);
+
+  useEffect(() => {
+    if (user && (userRole === 'lawyer' || userRole === 'admin')) {
+      loadRequests();
+      loadVerificationStatus();
+    }
+  }, [user?.uid, userRole, loadRequests, loadVerificationStatus]); // Only re-run when user ID or role changes
 
   const handleAccept = async (request: ConsultationRequest) => {
     setActioningRequestId(request.id);
@@ -186,8 +187,10 @@ export default function LawyerDashboardPage() {
   };
 
   const handleOpenChat = async (request: ConsultationRequest) => {
+    if (!user) return;
+    
     try {
-      const session = await getChatSessionByRequestId(request.id);
+      const session = await getChatSessionByRequestId(request.id, user.uid);
       if (session) {
         router.push(`/chat/${session.id}`);
       } else {
@@ -507,14 +510,12 @@ export default function LawyerDashboardPage() {
       </div>
 
       {/* Verification Status Card */}
-      {!loadingVerification && (
-        <Card className={`mb-6 ${verificationStatus === 'approved' ? 'border-green-500' : verificationStatus === 'pending' ? 'border-yellow-500' : verificationStatus === 'rejected' ? 'border-red-500' : 'border-blue-500'}`}>
+      {!loadingVerification && verificationStatus !== 'approved' && (
+        <Card className={`mb-6 ${verificationStatus === 'pending' ? 'border-yellow-500' : verificationStatus === 'rejected' ? 'border-red-500' : 'border-blue-500'}`}>
           <CardHeader>
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
-                {verificationStatus === 'approved' ? (
-                  <ShieldCheck className="h-6 w-6 text-green-600" />
-                ) : verificationStatus === 'pending' ? (
+                {verificationStatus === 'pending' ? (
                   <Clock className="h-6 w-6 text-yellow-600" />
                 ) : verificationStatus === 'rejected' ? (
                   <XCircle className="h-6 w-6 text-red-600" />
@@ -523,14 +524,12 @@ export default function LawyerDashboardPage() {
                 )}
                 <div>
                   <CardTitle>
-                    {verificationStatus === 'approved' ? 'Verified Lawyer' : 
-                     verificationStatus === 'pending' ? 'Verification Pending' : 
+                    {verificationStatus === 'pending' ? 'Verification Pending' : 
                      verificationStatus === 'rejected' ? 'Verification Rejected' : 
                      'Verification Required'}
                   </CardTitle>
                   <CardDescription>
-                    {verificationStatus === 'approved' ? 'You are verified and can accept consultation requests' : 
-                     verificationStatus === 'pending' ? 'Your documents are under admin review' : 
+                    {verificationStatus === 'pending' ? 'Your documents are under admin review' : 
                      verificationStatus === 'rejected' ? 'Your verification was rejected. Please resubmit.' : 
                      'Upload your credentials to start accepting consultations'}
                   </CardDescription>
@@ -538,27 +537,25 @@ export default function LawyerDashboardPage() {
               </div>
               <Button 
                 onClick={() => router.push('/lawyer-verification')}
-                variant={verificationStatus === 'approved' ? 'outline' : 'default'}
+                variant="default"
               >
                 <Upload className="mr-2 h-4 w-4" />
-                {verificationStatus === 'approved' ? 'View Documents' : 'Upload Documents'}
+                Upload Documents
               </Button>
             </div>
           </CardHeader>
-          {verificationStatus !== 'approved' && (
-            <CardContent>
-              <Alert variant={verificationStatus === 'rejected' ? 'destructive' : 'default'}>
-                <AlertTriangle className="h-4 w-4" />
-                <AlertDescription>
-                  {verificationStatus === 'pending' 
-                    ? 'You can view consultation requests, but cannot accept them until verified by an admin.'
-                    : verificationStatus === 'rejected'
-                    ? 'Your verification was rejected. Please review admin feedback and resubmit your documents.'
-                    : 'You must complete verification before accepting consultation requests.'}
-                </AlertDescription>
-              </Alert>
-            </CardContent>
-          )}
+          <CardContent>
+            <Alert variant={verificationStatus === 'rejected' ? 'destructive' : 'default'}>
+              <AlertTriangle className="h-4 w-4" />
+              <AlertDescription>
+                {verificationStatus === 'pending' 
+                  ? 'You can view consultation requests, but cannot accept them until verified by an admin.'
+                  : verificationStatus === 'rejected'
+                  ? 'Your verification was rejected. Please review admin feedback and resubmit your documents.'
+                  : 'You must complete verification before accepting consultation requests.'}
+              </AlertDescription>
+            </Alert>
+          </CardContent>
         </Card>
       )}
 

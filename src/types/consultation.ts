@@ -5,6 +5,7 @@ export interface ConsultationRequest {
   userEmail: string;
   lawyerId: string;
   lawyerName: string;
+  lawyerEmail?: string;
   documentId?: string;
   documentName?: string;
   status: ConsultationStatus;
@@ -32,8 +33,10 @@ export interface ChatSession {
   participants: {
     userId: string;
     userName: string;
+    userEmail?: string; // Optional for backward compatibility
     lawyerId: string;
     lawyerName: string;
+    lawyerEmail?: string; // Optional for backward compatibility
   };
   status: "active" | "closed";
   startedAt: Date;

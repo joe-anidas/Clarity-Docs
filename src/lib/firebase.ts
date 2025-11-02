@@ -32,7 +32,14 @@ import {
   type DocumentData,
   type QueryDocumentSnapshot,
 } from 'firebase/firestore';
-import { getStorage } from 'firebase/storage';
+import { 
+  getStorage, 
+  ref as storageRef, 
+  uploadBytes,
+  uploadBytesResumable,
+  getDownloadURL,
+  deleteObject 
+} from 'firebase/storage';
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -90,6 +97,15 @@ export {
   onSnapshot,
   type DocumentData,
   type QueryDocumentSnapshot,
+};
+
+// Export Storage functions
+export {
+  storageRef,
+  uploadBytes,
+  uploadBytesResumable,
+  getDownloadURL,
+  deleteObject,
 };
 
 export default firebaseApp;

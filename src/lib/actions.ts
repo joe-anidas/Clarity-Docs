@@ -10,17 +10,31 @@ import { z } from 'zod';
 import { generateRiskScore, GenerateRiskScoreOutput } from '@/ai/flows/generate-risk-score';
 import { generateContractTimeline } from '@/ai/flows/generate-contract-timeline';
 import { generateNegotiationSuggestions } from '@/ai/flows/generate-negotiation-suggestions';
+import { maskSensitiveData } from '@/ai/flows/mask-sensitive-data';
 
 const summarizeSchema = z.object({
   documentText: z.string().min(1, 'Document text cannot be empty.'),
   agreementType: z.string().optional(),
 });
 
-export async function summarizeDocumentAction(input: { documentText: string, agreementType?: string }): Promise<Partial<GeneratePlainLanguageSummaryOutput> & { error?: string }> {
+export async function summarizeDocumentAction(input: { documentText: string, agreementType?: string }): Promise<Partial<GeneratePlainLanguageSummaryOutput> & { error?: string; maskedText?: string }> {
   try {
     const validatedInput = summarizeSchema.parse(input);
-    const result = await generatePlainLanguageSummary(validatedInput);
-    return result;
+    
+    // First, mask sensitive information
+    const maskingResult = await maskSensitiveData({ documentText: validatedInput.documentText });
+    
+    // Then generate summary using masked text
+    const result = await generatePlainLanguageSummary({
+      documentText: maskingResult.maskedText,
+      agreementType: validatedInput.agreementType,
+    });
+    
+    // Return both the summary and the masked text
+    return { 
+      ...result, 
+      maskedText: maskingResult.maskedText 
+    };
   } catch (error) {
     console.error(error);
     return { error: 'Failed to generate summary. Please try again.' };
@@ -50,8 +64,16 @@ const processDocumentSchema = z.object({
 export async function processDocumentAction(input: { fileDataUri: string }) {
   try {
     const validatedInput = processDocumentSchema.parse(input);
+    // First, extract text from the document using Document AI
     const result = await processDocument(validatedInput);
-    return { documentText: result.text };
+    
+    // Then, mask sensitive information in the extracted text
+    const maskingResult = await maskSensitiveData({ documentText: result.text });
+    
+    return { 
+      documentText: maskingResult.maskedText,
+      maskedEntities: maskingResult.maskedEntities,
+    };
   } catch (error) {
     console.error(error);
     return { error: 'Failed to process document with Document AI. Please try again.' };

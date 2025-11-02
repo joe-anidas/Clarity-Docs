@@ -9,6 +9,7 @@ import { useAuth } from '@/components/auth/auth-provider';
 import { Button } from '../ui/button';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '../ui/dropdown-menu';
 import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
+import { LanguageSwitcher } from './language-switcher';
 
 const Header = () => {
   const { user, userRole, signOut, loading } = useAuth();
@@ -42,6 +43,7 @@ const Header = () => {
             </Link>
           </div>
           <div className="flex items-center gap-4">
+            <LanguageSwitcher />
             {user && (
               <nav className="hidden md:flex items-center gap-2">
                 <Button asChild variant="ghost" size="sm">
