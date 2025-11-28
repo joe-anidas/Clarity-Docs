@@ -20,24 +20,63 @@ const summarizeSchema = z.object({
 export async function summarizeDocumentAction(input: { documentText: string, agreementType?: string }): Promise<Partial<GeneratePlainLanguageSummaryOutput> & { error?: string; maskedText?: string }> {
   try {
     const validatedInput = summarizeSchema.parse(input);
-    
+
     // First, mask sensitive information
     const maskingResult = await maskSensitiveData({ documentText: validatedInput.documentText });
-    
+
     // Then generate summary using masked text
     const result = await generatePlainLanguageSummary({
       documentText: maskingResult.maskedText,
       agreementType: validatedInput.agreementType,
     });
-    
+
     // Return both the summary and the masked text
-    return { 
-      ...result, 
-      maskedText: maskingResult.maskedText 
+    return {
+      ...result,
+      maskedText: maskingResult.maskedText
     };
   } catch (error) {
     console.error(error);
     return { error: 'Failed to generate summary. Please try again.' };
+  }
+}
+
+export async function analyzeDocumentAction(input: { documentText: string, agreementType?: string }) {
+  try {
+    const validatedInput = summarizeSchema.parse(input);
+
+    // 1. Mask sensitive information first
+    const maskingResult = await maskSensitiveData({ documentText: validatedInput.documentText });
+    const maskedText = maskingResult.maskedText;
+
+    // 2. Run all analysis tasks in parallel using the masked text
+    const [
+      summaryResult,
+      riskResult,
+      timelineResult,
+      negotiationResult,
+      examplesResult
+    ] = await Promise.all([
+      generatePlainLanguageSummary({ documentText: maskedText, agreementType: validatedInput.agreementType }),
+      generateRiskScore({ documentText: maskedText, agreementType: validatedInput.agreementType }),
+      generateContractTimeline({ documentText: maskedText, agreementType: validatedInput.agreementType }),
+      generateNegotiationSuggestions({ documentText: maskedText }),
+      generateExamples({ documentText: maskedText })
+    ]);
+
+    // 3. Return consolidated result
+    return {
+      maskedText,
+      summary: summaryResult,
+      riskScore: riskResult,
+      timeline: timelineResult.timeline,
+      negotiationSuggestions: negotiationResult.suggestions,
+      examples: examplesResult.examples
+    };
+
+  } catch (error) {
+    console.error('Analysis failed:', error);
+    return { error: 'Failed to analyze document. Please try again.' };
   }
 }
 
@@ -66,11 +105,11 @@ export async function processDocumentAction(input: { fileDataUri: string }) {
     const validatedInput = processDocumentSchema.parse(input);
     // First, extract text from the document using Document AI
     const result = await processDocument(validatedInput);
-    
+
     // Then, mask sensitive information in the extracted text
     const maskingResult = await maskSensitiveData({ documentText: result.text });
-    
-    return { 
+
+    return {
       documentText: maskingResult.maskedText,
       maskedEntities: maskingResult.maskedEntities,
     };
@@ -81,9 +120,9 @@ export async function processDocumentAction(input: { fileDataUri: string }) {
 }
 
 const TranslationDataSchema = z.object({
-    summary: z.array(z.object({ keyPoint: z.string(), description: z.string() })).optional(),
-    dos: z.array(z.string()).optional(),
-    donts: z.array(z.string()).optional(),
+  summary: z.array(z.object({ keyPoint: z.string(), description: z.string() })).optional(),
+  dos: z.array(z.string()).optional(),
+  donts: z.array(z.string()).optional(),
 });
 type TranslationData = z.infer<typeof TranslationDataSchema>;
 
@@ -101,25 +140,25 @@ export async function translateTextAction(input: { data: TranslationData, target
     if (!GOOGLE_CLOUD_API_KEY) throw new Error('Missing GOOGLE_CLOUD_API_KEY from .env');
 
     const textsToTranslate: string[] = [];
-    
+
     // Flatten all text fields into a single array
     data.summary?.forEach(item => textsToTranslate.push(item.keyPoint, item.description));
     data.dos?.forEach(item => textsToTranslate.push(item));
     data.donts?.forEach(item => textsToTranslate.push(item));
-    
+
     if (textsToTranslate.length === 0) {
       return { translatedData: {} };
     }
 
     const url = `https://translation.googleapis.com/language/translate/v2?key=${GOOGLE_CLOUD_API_KEY}`;
-    
+
     // Translate each text individually to maintain proper formatting for Indic languages
     const response = await fetch(url, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json; charset=utf-8' },
-      body: JSON.stringify({ 
-        q: textsToTranslate, 
-        target: targetLanguage, 
+      body: JSON.stringify({
+        q: textsToTranslate,
+        target: targetLanguage,
         format: 'text',
         model: 'nmt' // Use Neural Machine Translation for better quality
       }),
@@ -136,20 +175,20 @@ export async function translateTextAction(input: { data: TranslationData, target
 
     const translatedTexts = translations.map((t: any) => t.translatedText.trim());
     let currentIndex = 0;
-    
+
     const translatedData: TranslationData = {};
 
     if (data.summary) {
-        translatedData.summary = data.summary.map(() => ({
-            keyPoint: translatedTexts[currentIndex++],
-            description: translatedTexts[currentIndex++],
-        }));
+      translatedData.summary = data.summary.map(() => ({
+        keyPoint: translatedTexts[currentIndex++],
+        description: translatedTexts[currentIndex++],
+      }));
     }
     if (data.dos) {
-        translatedData.dos = data.dos.map(() => translatedTexts[currentIndex++]);
+      translatedData.dos = data.dos.map(() => translatedTexts[currentIndex++]);
     }
     if (data.donts) {
-        translatedData.donts = data.donts.map(() => translatedTexts[currentIndex++]);
+      translatedData.donts = data.donts.map(() => translatedTexts[currentIndex++]);
     }
 
     return { translatedData };
@@ -178,19 +217,19 @@ export async function generateRiskScoreAction(input: { documentText: string, agr
 }
 
 const whatIfSchema = z.object({
-    documentText: z.string().min(1, 'Document text cannot be empty.'),
-    question: z.string().min(1, 'Question cannot be empty.'),
+  documentText: z.string().min(1, 'Document text cannot be empty.'),
+  question: z.string().min(1, 'Question cannot be empty.'),
 });
 
 export async function answerWhatIfQuestionAction(input: { documentText: string, question: string }) {
-    try {
-        const validatedInput = whatIfSchema.parse(input);
-        const result = await answerWhatIfQuestion(validatedInput);
-        return { answer: result.answer };
-    } catch (error) {
-        console.error(error);
-        return { error: 'Failed to answer question. Please try again.' };
-    }
+  try {
+    const validatedInput = whatIfSchema.parse(input);
+    const result = await answerWhatIfQuestion(validatedInput);
+    return { answer: result.answer };
+  } catch (error) {
+    console.error(error);
+    return { error: 'Failed to answer question. Please try again.' };
+  }
 }
 
 const examplesSchema = z.object({
@@ -229,12 +268,12 @@ const negotiationSuggestionsSchema = z.object({
 });
 
 export async function generateNegotiationSuggestionsAction(input: { documentText: string }) {
-    try {
-        const validatedInput = negotiationSuggestionsSchema.parse(input);
-        const result = await generateNegotiationSuggestions(validatedInput);
-        return { suggestions: result.suggestions };
-    } catch (error) {
-        console.error(error);
-        return { error: 'Failed to generate negotiation suggestions. Please try again.' };
-    }
+  try {
+    const validatedInput = negotiationSuggestionsSchema.parse(input);
+    const result = await generateNegotiationSuggestions(validatedInput);
+    return { suggestions: result.suggestions };
+  } catch (error) {
+    console.error(error);
+    return { error: 'Failed to generate negotiation suggestions. Please try again.' };
+  }
 }

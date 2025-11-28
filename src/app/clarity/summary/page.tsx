@@ -3,8 +3,9 @@
 import { useState, useEffect, Suspense } from 'react';
 import { useRouter } from 'next/navigation';
 import { useToast } from '@/hooks/use-toast';
-import { summarizeDocumentAction } from '@/lib/actions';
+import { summarizeDocumentAction, generateRiskScoreAction, generateContractTimelineAction, generateNegotiationSuggestionsAction, generateExamplesAction } from '@/lib/actions';
 import type { GeneratePlainLanguageSummaryOutput } from '@/ai/flows/generate-plain-language-summary';
+import type { GenerateRiskScoreOutput } from '@/ai/flows/generate-risk-score';
 
 import SummaryView from '@/components/clarity-docs/summary-view';
 import SummarySkeleton from '@/components/clarity-docs/summary-skeleton';
@@ -16,6 +17,13 @@ function SummaryPageContent() {
   const [documentText, setDocumentText] = useState('');
   const [summaryData, setSummaryData] = useState<GeneratePlainLanguageSummaryOutput | null>(null);
   const [agreementType, setAgreementType] = useState<string | undefined>();
+
+  // State for pre-fetched analysis data
+  const [riskScore, setRiskScore] = useState<GenerateRiskScoreOutput | undefined>();
+  const [timeline, setTimeline] = useState<any[] | undefined>();
+  const [negotiationSuggestions, setNegotiationSuggestions] = useState<any[] | undefined>();
+  const [examples, setExamples] = useState<any[] | undefined>();
+
   const { toast } = useToast();
   const { user, loading } = useAuth();
   const router = useRouter();
@@ -33,6 +41,12 @@ function SummaryPageContent() {
       const savedDocumentText = localStorage.getItem('clarityDocumentText');
       const savedAgreementType = localStorage.getItem('clarityAgreementType');
 
+      // Load pre-fetched analysis data
+      const savedRiskScore = localStorage.getItem('clarityRiskScore');
+      const savedTimeline = localStorage.getItem('clarityTimeline');
+      const savedNegotiation = localStorage.getItem('clarityNegotiation');
+      const savedExamples = localStorage.getItem('clarityExamples');
+
       // If we have saved summary data, use it (for page reloads)
       if (savedSummaryData && savedDocumentText) {
         try {
@@ -40,6 +54,12 @@ function SummaryPageContent() {
           setDocumentText(savedDocumentText);
           setAgreementType(savedAgreementType || undefined);
           setSummaryData(parsedSummary);
+
+          if (savedRiskScore) setRiskScore(JSON.parse(savedRiskScore));
+          if (savedTimeline) setTimeline(JSON.parse(savedTimeline));
+          if (savedNegotiation) setNegotiationSuggestions(JSON.parse(savedNegotiation));
+          if (savedExamples) setExamples(JSON.parse(savedExamples));
+
           setIsLoading(false);
           return;
         } catch (error) {
@@ -61,67 +81,92 @@ function SummaryPageContent() {
       setDocumentText(text);
       setAgreementType(type);
 
-      // Generate summary (this will also mask the text)
-      const result = await summarizeDocumentAction({ documentText: text, agreementType: type });
+      // First, generate just the summary to show the page quickly
+      const summaryResult = await summarizeDocumentAction({ documentText: text, agreementType: type });
 
-      setIsLoading(false);
-
-      if (result.error) {
+      if (summaryResult.error) {
+        setIsLoading(false);
         toast({
           variant: 'destructive',
           title: 'Summarization Failed',
-          description: result.error,
+          description: summaryResult.error,
         });
         router.push('/clarity');
-      } else if (result.summary) {
-        const summaryResult = result as GeneratePlainLanguageSummaryOutput & { maskedText?: string };
-        setSummaryData(summaryResult);
-        
-        // Use masked text for display and storage
-        const maskedText = summaryResult.maskedText || text;
-        setDocumentText(maskedText); // Update the state with masked text
-        
-        // Save summary data to localStorage for persistence across reloads
-        localStorage.setItem('claritySummaryData', JSON.stringify(summaryResult));
-        // Also update the stored document text with masked version
+        return;
+      }
+
+      if (summaryResult.summary) {
+        const summary = summaryResult as GeneratePlainLanguageSummaryOutput & { maskedText?: string };
+        setSummaryData(summary);
+
+        const maskedText = summary.maskedText || text;
+        setDocumentText(maskedText);
+
+        // Save summary data immediately
+        localStorage.setItem('claritySummaryData', JSON.stringify(summary));
         localStorage.setItem('clarityDocumentText', maskedText);
-        
-        // Check if we're editing an existing document
+
+        // Show the page now
+        setIsLoading(false);
+
+        // Save to Firestore history
         const editingDocumentId = localStorage.getItem('clarityEditingDocumentId');
-        
-        // Save or update document to Firestore history (with masked content)
         if (user) {
           try {
+            const docData = {
+              documentName: `Document - ${new Date().toLocaleString()}`,
+              documentType: type || 'Other',
+              content: maskedText,
+              summary: summary,
+              fileType: 'text',
+            };
+
             if (editingDocumentId) {
-              // Update existing document
-              await updateDocumentInHistory(editingDocumentId, {
-                documentName: `Document - ${new Date().toLocaleString()}`,
-                documentType: type || 'Other',
-                content: maskedText, // Store masked content
-                summary: summaryResult,
-                fileType: 'text',
-              });
-              // Clear the editing flag
+              await updateDocumentInHistory(editingDocumentId, docData);
               localStorage.removeItem('clarityEditingDocumentId');
               toast({
                 title: 'Document Updated',
                 description: 'Your document has been updated successfully.',
               });
             } else {
-              // Create new document
-              await saveDocumentToHistory(user.uid, {
-                documentName: `Document - ${new Date().toLocaleString()}`,
-                documentType: type || 'Other',
-                content: maskedText, // Store masked content
-                summary: summaryResult,
-                fileType: 'text',
-              });
+              await saveDocumentToHistory(user.uid, docData);
             }
           } catch (error) {
             console.error('Failed to save to history:', error);
-            // Don't show error to user, just log it
           }
         }
+
+        // Now process the rest in the background
+        (async () => {
+          try {
+            const [riskResult, timelineResult, negotiationResult, examplesResult] = await Promise.all([
+              generateRiskScoreAction({ documentText: maskedText, agreementType: type }),
+              generateContractTimelineAction({ documentText: maskedText, agreementType: type }),
+              generateNegotiationSuggestionsAction({ documentText: maskedText }),
+              generateExamplesAction({ documentText: maskedText })
+            ]);
+
+            // Update state with background results
+            if (riskResult.riskScore) {
+              setRiskScore(riskResult.riskScore);
+              localStorage.setItem('clarityRiskScore', JSON.stringify(riskResult.riskScore));
+            }
+            if (timelineResult.timeline) {
+              setTimeline(timelineResult.timeline);
+              localStorage.setItem('clarityTimeline', JSON.stringify(timelineResult.timeline));
+            }
+            if (negotiationResult.suggestions) {
+              setNegotiationSuggestions(negotiationResult.suggestions);
+              localStorage.setItem('clarityNegotiation', JSON.stringify(negotiationResult.suggestions));
+            }
+            if (examplesResult.examples) {
+              setExamples(examplesResult.examples);
+              localStorage.setItem('clarityExamples', JSON.stringify(examplesResult.examples));
+            }
+          } catch (error) {
+            console.error('Background analysis failed:', error);
+          }
+        })();
       }
     };
 
@@ -136,6 +181,10 @@ function SummaryPageContent() {
     localStorage.removeItem('clarityAgreementType');
     localStorage.removeItem('claritySummaryData');
     localStorage.removeItem('clarityEditingDocumentId');
+    localStorage.removeItem('clarityRiskScore');
+    localStorage.removeItem('clarityTimeline');
+    localStorage.removeItem('clarityNegotiation');
+    localStorage.removeItem('clarityExamples');
     router.push('/clarity');
   };
 
@@ -161,11 +210,15 @@ function SummaryPageContent() {
 
   return (
     <div className="w-full p-16">
-      <SummaryView 
-        originalText={documentText} 
-        summaryData={summaryData} 
-        onReset={handleReset} 
-        agreementType={agreementType} 
+      <SummaryView
+        originalText={documentText}
+        summaryData={summaryData}
+        onReset={handleReset}
+        agreementType={agreementType}
+        initialRiskScore={riskScore}
+        initialTimeline={timeline}
+        initialNegotiationSuggestions={negotiationSuggestions}
+        initialExamples={examples}
       />
     </div>
   );
