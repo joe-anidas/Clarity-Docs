@@ -27,6 +27,7 @@ ClarityDocs is an intelligent document analysis and legal consultation platform 
 
 ### 🔍 **Smart Document Processing**
 - **Multi-format Support**: Upload PDFs, images (JPG, PNG) with OCR extraction via Google Document AI
+- **🌐 Multilingual OCR**: Full support for **English, Hindi (हिन्दी), Tamil (தமிழ்), Telugu (తెలుగు), Kannada (ಕನ್ನಡ), and Malayalam (മലയാളം)** documents
 - **Text Input**: Paste document content directly for instant analysis
 - **🔒 Privacy Protection**: Automatic sensitive data masking before processing and storage
 - **Document History**: Access all previously analyzed documents with timestamps

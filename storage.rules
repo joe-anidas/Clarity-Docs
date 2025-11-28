@@ -36,14 +36,15 @@ service firebase.storage {
     }
     
     // Chat documents - accessible by session participants
-    match /chat-documents/{sessionId}/{userId}/{fileName} {
+    match /chat-documents/{sessionId}/{userId}/{allFiles=**} {
       // Allow read if user is authenticated (we'll verify session access in Firestore)
       allow read: if request.auth != null;
       
       // Allow upload if user is authenticated and matches the userId in the path
+      // Accept both documents and images
       allow write: if request.auth != null && 
                       request.auth.uid == userId &&
-                      isValidDocument();
+                      (isValidDocument() || isValidImage());
       
       // Allow delete if user is the uploader
       allow delete: if request.auth != null && request.auth.uid == userId;

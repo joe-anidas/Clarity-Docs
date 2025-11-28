@@ -110,9 +110,11 @@ service cloud.firestore {
         allow read: if isAuthenticated() && isParticipant();
         
         // Allow creating messages if user is a participant and is the sender
-        allow create: if isAuthenticated() && 
-          request.resource.data.senderId == request.auth.uid &&
-          isParticipant();
+        // OR if it's a system message created by a participant
+        allow create: if isAuthenticated() && isParticipant() && (
+          request.resource.data.senderId == request.auth.uid ||
+          request.resource.data.senderId == "system"
+        );
         
         // Allow updating messages for participants (for marking as read)
         allow update: if isAuthenticated() && isParticipant();

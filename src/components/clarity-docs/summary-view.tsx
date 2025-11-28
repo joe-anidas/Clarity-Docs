@@ -594,7 +594,15 @@ const SummaryView = ({ originalText, summaryData, onReset, agreementType }: Summ
                     </div>
                   </DialogHeader>
                   <div className="max-h-[65vh] overflow-y-auto w-full rounded-md border p-4">
-                    <div className="text-sm whitespace-pre-wrap">
+                    <div 
+                      className="text-sm whitespace-pre-wrap break-words font-sans" 
+                      style={{ 
+                        lineHeight: '1.8',
+                        fontFamily: 'Noto Sans, Noto Sans Devanagari, Noto Sans Tamil, Noto Sans Telugu, Noto Sans Kannada, Noto Sans Malayalam, system-ui, -apple-system, sans-serif',
+                        wordWrap: 'break-word',
+                        overflowWrap: 'break-word',
+                      }}
+                    >
                       {originalText}
                     </div>
                   </div>

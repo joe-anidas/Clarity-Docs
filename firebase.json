@@ -5,7 +5,7 @@
   },
   "storage": [
     {
-      "bucket": "clarity-docs.firebasestorage.app",
+      "bucket": "clarity-docs-f7285.firebasestorage.app",
       "rules": "storage.rules"
     }
   ]

@@ -140,6 +140,13 @@ const DocumentUpload = ({ onSummarize, isLoading = false, initialDocument, onCle
                 <strong>Privacy Protection:</strong> All sensitive information (names, addresses, phone numbers, financial details, etc.) is automatically masked before processing and storage.
               </AlertDescription>
             </Alert>
+
+            <Alert className="bg-green-50 dark:bg-green-950 border-green-200 dark:border-green-800">
+              <Sparkles className="h-4 w-4 text-green-600 dark:text-green-400" />
+              <AlertDescription className="text-green-800 dark:text-green-200 text-sm">
+                <strong>Multilingual Support:</strong> Upload documents in <strong>English, Hindi (हिन्दी), Tamil (தமிழ்), Telugu (తెలుగు), Kannada (ಕನ್ನಡ), or Malayalam (മലയാളം)</strong>. Our AI automatically detects and processes text in all supported languages.
+              </AlertDescription>
+            </Alert>
             
              <input
               type="file"

@@ -73,7 +73,30 @@ const processDocumentFlow = ai.defineFlow(
     }
 
 
-    const request = {
+    // Document AI request configuration with multilingual OCR support
+    // Note: Language hints work ONLY with OCR_PROCESSOR type, not SUMMARY_PROCESSOR
+    // If you're getting an error about OcrConfig, you need to create an OCR processor
+    // See: /docs/FIX_TAMIL_PDF_OCR.md for instructions
+    
+    const requestWithOCR = {
+      name,
+      rawDocument: {
+        content: b64part,
+        mimeType: mimePart,
+      },
+      // OCR configuration for multilingual support
+      // Languages: English, Hindi (हिन्दी), Tamil (தமिழ்), Telugu (తెలుగు), 
+      // Kannada (ಕನ್ನಡ), Malayalam (മലയാളം)
+      processOptions: {
+        ocrConfig: {
+          languageHints: ['en', 'hi', 'ta', 'te', 'kn', 'ml'],
+          enableNativePdfParsing: true,
+        },
+      },
+    };
+
+    // Fallback request without OCR config (for Summary Processor)
+    const requestWithoutOCR = {
       name,
       rawDocument: {
         content: b64part,
@@ -81,7 +104,19 @@ const processDocumentFlow = ai.defineFlow(
       },
     };
 
-    const [result] = await client.processDocument(request);
+    // Try OCR config first, fallback to basic if processor doesn't support it
+    let result;
+    try {
+      [result] = await client.processDocument(requestWithOCR);
+    } catch (error: any) {
+      // If OCR config not supported, try without it
+      if (error?.message?.includes('OcrConfig') || error?.message?.includes('SUMMARY_PROCESSOR')) {
+        console.warn('Processor does not support OCR config, using basic extraction. For better Tamil/multilingual support, create an OCR processor.');
+        [result] = await client.processDocument(requestWithoutOCR);
+      } else {
+        throw error; // Re-throw if it's a different error
+      }
+    }
     const { document } = result;
 
     if (!document || !document.text) {
