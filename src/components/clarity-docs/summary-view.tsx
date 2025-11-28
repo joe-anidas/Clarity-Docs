@@ -803,19 +803,19 @@ const SummaryView = ({
                         <CardTitle className="text-lg">Reminders</CardTitle>
                       </CardHeader>
                       <CardContent className="space-y-4">
-                        {summaryData.effectiveDate && (
+                        {summaryData.effectiveDate && summaryData.effectiveDate !== 'null' && (
                           <div>
                             <h4 className="font-semibold text-sm">Agreement Effective Date</h4>
                             <p className="text-sm text-muted-foreground">{summaryData.effectiveDate}</p>
                           </div>
                         )}
-                        {summaryData.lockInPeriod && (
+                        {summaryData.lockInPeriod && summaryData.lockInPeriod !== 'null' && (
                           <div>
                             <h4 className="font-semibold text-sm">Lock-in Period</h4>
                             <p className="text-sm text-muted-foreground">{summaryData.lockInPeriod}</p>
                           </div>
                         )}
-                        {summaryData.noticePeriod && (
+                        {summaryData.noticePeriod && summaryData.noticePeriod !== 'null' && (
                           <div className="flex items-center justify-between">
                             <div>
                               <h4 className="font-semibold text-sm">Notice Period</h4>
